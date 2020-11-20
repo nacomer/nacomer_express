@@ -11,9 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      SubPicture.belongsTo(models.Hobby, {
+        foreignKey: 'hobbyId',
+        onDelete: 'CASCADE',
+    })
     }
   };
   SubPicture.init({
+    hobbyId: DataTypes.INTEGER,
     subPictureURL: DataTypes.STRING
   }, {
     sequelize,

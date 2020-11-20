@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node -r dotenv/config ./bin/www",
     "dev": "nodemon -r dotenv/config ./bin/www",
-    "sequelize": "sequelize"
+    "sequelize": "sequelize",
+    "migrate": "sequelize-cli db:migrate",
+    "rollback": "sequelize-cli db:migrate:undo:all"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

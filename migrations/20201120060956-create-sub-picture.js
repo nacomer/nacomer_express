@@ -8,6 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      hobbyId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Hobbies',
+          key: 'id',
+        }
+      },
       subPictureURL: {
         type: Sequelize.STRING
       },

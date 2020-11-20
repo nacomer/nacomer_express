@@ -11,10 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Hobby.belongsTo(models.Period, {
+        foreignKey: 'periodId'
+      });
+      Hobby.hasMany(models.Comment, {
+        foreignKey: 'hobbyId',
+        as: 'Comments',
+      });
+      Hobby.hasMany(models.Goods, {
+        foreignKey: 'hobbyId',
+        as: 'Goods',
+      });
+      Hobby.hasMany(models.Video, {
+        foreignKey: 'hobbyId',
+        as: 'Videos',
+      });
+      Hobby.hasMany(models.SubPicture, {
+        foreignKey: 'hobbyId',
+        as: 'SubPictures',
+      });
     }
   };
   Hobby.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    mainPicture: DataTypes.STRING,
+    description: DataTypes.STRING,
+    cost: DataTypes.INTEGER,
+    periodId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Hobby',

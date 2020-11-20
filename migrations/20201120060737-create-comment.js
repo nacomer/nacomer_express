@@ -11,6 +11,13 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
+      hobbyId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Hobbies',
+          key: 'id',
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
