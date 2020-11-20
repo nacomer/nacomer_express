@@ -7,7 +7,9 @@
     "dev": "nodemon -r dotenv/config ./bin/www",
     "sequelize": "sequelize",
     "migrate": "sequelize-cli db:migrate",
-    "rollback": "sequelize-cli db:migrate:undo:all"
+    "rollback": "sequelize-cli db:migrate:undo:all",
+    "generate-seeds": "sequelize-cli seed:generate",
+    "seed": "sequelize-cli db:seed:all"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
