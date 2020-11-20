@@ -6,6 +6,7 @@
     "start": "node -r dotenv/config ./bin/www",
     "dev": "nodemon -r dotenv/config ./bin/www",
     "sequelize": "sequelize",
+    "createdb": "sequelize db:create",
     "migrate": "sequelize-cli db:migrate",
     "rollback": "sequelize-cli db:migrate:undo:all",
     "generate-seeds": "sequelize-cli seed:generate",

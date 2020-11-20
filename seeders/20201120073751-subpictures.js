@@ -13,7 +13,8 @@ module.exports = {
     */
    const now = new Date();
     return queryInterface.bulkInsert('SubPictures', [
-      {hobbyId: 1, subPictureURL: "sub_golf", createdAt: now, updatedAt: now},
+      {hobbyId: 1, subPicture: "./image/sub_golf.png", createdAt: now, updatedAt: now},
+      {hobbyId: 2, subPicture: "./image/sub_tennis.png", createdAt: now, updatedAt: now}
     ], {});
   },
 

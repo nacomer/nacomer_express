@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   SubPicture.init({
     hobbyId: DataTypes.INTEGER,
-    subPictureURL: DataTypes.STRING
+    subPicture: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'SubPicture',

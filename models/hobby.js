@@ -11,9 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Hobby.belongsTo(models.Period, {
-        foreignKey: 'periodId'
-      });
       Hobby.hasMany(models.Comment, {
         foreignKey: 'hobbyId',
         as: 'Comments',
@@ -37,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     mainPicture: DataTypes.STRING,
     description: DataTypes.STRING,
     cost: DataTypes.INTEGER,
-    periodId: DataTypes.INTEGER
+    period: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Hobby',

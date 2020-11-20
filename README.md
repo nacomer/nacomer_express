@@ -18,6 +18,9 @@ DBの初期設定
 初期化
 $ yarn
 
+DB作成
+$ yarn createdb
+
 TBL作成
 $ yarn migrate
 

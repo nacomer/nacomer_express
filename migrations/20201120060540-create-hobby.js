@@ -20,12 +20,8 @@ module.exports = {
       cost: {
         type: Sequelize.INTEGER
       },
-      periodId: {
-        type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Periods',
-        //   key: 'id',
-        // }
+      period: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

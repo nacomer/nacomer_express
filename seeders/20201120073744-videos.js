@@ -14,6 +14,7 @@ module.exports = {
    const now = new Date();
    return queryInterface.bulkInsert('Videos', [
      {hobbyId: 1, videoURL: "https://www.youtube.com/watch?v=vjDt0itu4Wc", createdAt: now, updatedAt: now},
+     {hobbyId: 2, videoURL: "https://www.youtube.com/watch?v=vjDt0itu4Wc", createdAt: now, updatedAt: now},
    ], {});
   },
 
