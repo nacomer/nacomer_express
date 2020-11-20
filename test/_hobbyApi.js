@@ -1,9 +1,8 @@
-// import chai from "chai";
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-// import chaiHttp from "chai-http";
 const Hobby = require('../models').Hobby;
 const assert = chai.assert;
+const expect = chai.expect;
 
 chai.use(chaiHttp);
 
@@ -23,7 +22,9 @@ describe("Hobby Api Server", () => {
         const allHobbies = await Hobby.findAll({
             attributes: ['id', 'name', 'mainPicture', 'periodId']
         });
-        console.log("allhobies : " + allHobbies.leg);
+
+        const allHobbiesJson = allHobbies.map(hobby => hobby.dataValues);
+
         //Exercise
         const res = await request.get("/api/hobby");
 
@@ -31,8 +32,16 @@ describe("Hobby Api Server", () => {
         res.should.have.status(200);
         res.should.be.json;
         // assert.deepEqual(res.body, allHobbies);
-        // JSON.parse(res.text).should.deep.equal(allHobbies);
+        JSON.parse(res.text).should.deep.equal(allHobbiesJson);
+        JSON.parse(res.text).length.should.equal(allHobbies.length);
 
+        //Teardown
+    });
+
+    it("get specific hobbies", async () => {
+        //Setup
+        //Exercise
+        //Assert
         //Teardown
     });
 });
