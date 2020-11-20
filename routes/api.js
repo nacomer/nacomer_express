@@ -3,11 +3,8 @@ const router = express.Router();
 const apiController = require('../controllers/api');
 
 router.get('/hobby', apiController.getAllHobbies);
-// (req, res) => {
-  // Hobby.findAll().then(hobbies => {
-  //   res.send(hobbies);
-  // });
-// });
+
+router.get('/hobby/:id', apiController.getHobby);
 
 // router.get('/api/hobby/:id', function(req, res, next) {
 //   Hobby.findAll({

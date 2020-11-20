@@ -10,6 +10,15 @@ exports.getAllHobbies = async function (req, res, next) {
         return res.status(400).json({ status: 400, message: e.message });
     }
 };
+
+exports.getHobby = async function (req, res, next) {
+    try {
+        const hobbies = await apiService.getHobby(req.params.id);
+        return res.status(200).json(hobbies);
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+};
 // module.exports = async (req, res, next) => {
     
 //     const getAllHobbies = async (req, res) => {

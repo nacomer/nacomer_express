@@ -15,7 +15,7 @@ module.exports = {
           key: 'id',
         }
       },
-      subPictureURL: {
+      subPicture: {
         type: Sequelize.STRING
       },
       createdAt: {

@@ -13,7 +13,8 @@ module.exports = {
     */
    const now = new Date();
    return queryInterface.bulkInsert('Goods', [
-     {goodsName:"driver",hobbyId: 1, goodsPicture: "driver.img", createdAt: now, updatedAt: now},
+     {goodsName:"driver",hobbyId: 1, goodsPicture: "./image/driver.png", createdAt: now, updatedAt: now},
+     {goodsName:"ball",hobbyId: 2, goodsPicture: "./image/ball.png", createdAt: now, updatedAt: now}
    ], {});
   },
 

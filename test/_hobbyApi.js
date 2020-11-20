@@ -1,6 +1,10 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const Hobby = require('../models').Hobby;
+const Comment = require('../models').Commnet;
+const Video = require('../models').Video;
+const SubPicture = require('../models').SubPicture;
+const Goods = require('../models').Goods;
 const assert = chai.assert;
 const expect = chai.expect;
 
@@ -20,7 +24,7 @@ describe("Hobby Api Server", () => {
     it("get all hobbies", async () => {
         //Setup
         const allHobbies = await Hobby.findAll({
-            attributes: ['id', 'name', 'mainPicture', 'periodId']
+            attributes: ['id', 'name', 'mainPicture', 'period']
         });
 
         const allHobbiesJson = allHobbies.map(hobby => hobby.dataValues);
@@ -38,10 +42,34 @@ describe("Hobby Api Server", () => {
         //Teardown
     });
 
-    it("get specific hobbies", async () => {
+    it("get hobby", async () => {
         //Setup
+        // const specificHobby = await Hobby.findAll({
+        //     where: {
+        //         id:1
+        //     },
+        //     include: [
+        //         {
+        //             model: Comment, as: 'Comments',
+        //             required: false
+        //         }, {
+        //             model: Goods, as: 'Goods',
+        //             required: true
+        //         }, {
+        //             model: SubPicture, as: 'SubPictures',
+        //             required: true
+        //         }, {
+        //             model: Video, as: 'Videos',
+        //             required: true
+        //         }]
+        // }
+        // );
         //Exercise
+        const res = await request.get("/api/hobby/1");
         //Assert
+        // JSON.parse(res.text).goodsName.should.deep.equal("driver");
+        console.log(res.body);
+        assert.equal(res.body.Goods.goodsName,"driver")
         //Teardown
     });
 });
