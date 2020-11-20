@@ -9,7 +9,8 @@
     "migrate": "sequelize-cli db:migrate",
     "rollback": "sequelize-cli db:migrate:undo:all",
     "generate-seeds": "sequelize-cli seed:generate",
-    "seed": "sequelize-cli db:seed:all"
+    "seed": "sequelize-cli db:seed:all",
+    "test": "mocha test"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
