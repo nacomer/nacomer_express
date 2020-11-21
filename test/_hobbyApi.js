@@ -91,6 +91,7 @@ describe("Hobby Api Server", () => {
 
         //Exercise
         const res = await request.get("/api/hobby/1/comment");
+
         //Assert
         res.should.have.status(200);
         res.should.be.json;
