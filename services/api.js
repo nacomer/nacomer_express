@@ -6,6 +6,7 @@ const Goods = require('../models').Goods;
 
 exports.getAllHobbies = async function () {
     const result = await Hobby.findAll({
+        raw:true,
         attributes: ['id', 'name', 'mainPicture', 'period']
     });
     return result;
@@ -13,7 +14,7 @@ exports.getAllHobbies = async function () {
 
 exports.getHobby = async function () {
         const specificHobby = await Hobby.findAll({
-            attributes: ['name', 'mainPicture', 'description', 'cost'],
+            raw:true,
             where: {
                 id:1
             },
