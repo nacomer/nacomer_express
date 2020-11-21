@@ -24,7 +24,7 @@ describe("Hobby Api Server", () => {
     it("get all hobbies", async () => {
         //Setup
         const allHobbies = await Hobby.findAll({
-            raw: true, 
+            raw: true,
             attributes: ['id', 'name', 'mainPicture', 'period']
         });
 
@@ -72,7 +72,56 @@ describe("Hobby Api Server", () => {
         //Exercise
         const res = await request.get("/api/hobby/1");
         //Assert
+        res.should.have.status(200);
+        res.should.be.json;
         assert.equal(res.body[0][Goods.goodsName], specificHobby[0][Goods.goodsName]);
         //Teardown
+    });
+
+    it("get all comments", async () => {
+        //Setup
+        const allComments = await Comment.findAll({
+            raw: true,
+            where: {
+                hobbyId: 1
+            },
+            attributes: ['id', 'content']
+        }
+        );
+
+        //Exercise
+        const res = await request.get("/api/hobby/1/comment");
+
+        //Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        JSON.parse(res.text).should.deep.equal(allComments);
+
+        //Teardown
+    });
+
+    it("post comments", async () => {
+        //Setup
+        const expect = "ゴルフ場は埼玉が安くてよい";
+        const postComment = {
+            hobbyId:1,
+            content:"ゴルフ場は埼玉が安くてよい"
+        }
+
+        //Exercise
+        const res = await request.post("/api/hobby/1/comment").send(postComment);
+
+        //Assert
+        res.should.have.status(201);
+        res.should.be.json;
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        assert.equal(res.body.content, expect);
+
+        //Teardown
+        await Comment.destroy({
+            where: {
+                content: "ゴルフ場は埼玉が安くてよい"
+            }
+        });
     });
 });
