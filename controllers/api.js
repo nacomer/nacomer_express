@@ -29,8 +29,16 @@ exports.getAllComments = async function (req, res, next) {
     }
 };
 
+exports.postComment = async function (req, res, next) {
+    try {
+        const comment = await apiService.postComment(req.params.id, req.body.content);
+        return res.status(201).json({ id: comment.id, content: comment.content});
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+};
 // module.exports = async (req, res, next) => {
-    
+
 //     const getAllHobbies = async (req, res) => {
 
 //     }

@@ -24,7 +24,7 @@ describe("Hobby Api Server", () => {
     it("get all hobbies", async () => {
         //Setup
         const allHobbies = await Hobby.findAll({
-            raw: true, 
+            raw: true,
             attributes: ['id', 'name', 'mainPicture', 'period']
         });
 
@@ -98,5 +98,30 @@ describe("Hobby Api Server", () => {
         JSON.parse(res.text).should.deep.equal(allComments);
 
         //Teardown
+    });
+
+    it("post comments", async () => {
+        //Setup
+        const expect = "ゴルフ場は埼玉が安くてよい";
+        const postComment = {
+            hobbyId:1,
+            content:"ゴルフ場は埼玉が安くてよい"
+        }
+
+        //Exercise
+        const res = await request.post("/api/hobby/1/comment").send(postComment);
+
+        //Assert
+        res.should.have.status(201);
+        res.should.be.json;
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        assert.equal(res.body.content, expect);
+
+        //Teardown
+        await Comment.destroy({
+            where: {
+                content: "ゴルフ場は埼玉が安くてよい"
+            }
+        });
     });
 });
