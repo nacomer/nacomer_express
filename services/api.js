@@ -60,6 +60,20 @@ exports.postComment = async function (reqHobbyId, reqContent) {
     });
     return comment;
 };
+
+exports.deleteComment = async function (reqCommentId) {
+    try {
+        const deleteCount = await Comment.destroy({
+            where: {
+                id: reqCommentId
+            }
+        });
+        return deleteCount;
+    } catch(err) {
+        console.log(err);
+    }
+};
+
 // module.exports = async (req, res, next) => {
 
 //     const getAllHobbies = async (req, res) => {

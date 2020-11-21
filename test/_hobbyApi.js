@@ -17,9 +17,23 @@ chai.should();
 describe("Hobby Api Server", () => {
     const server = http.createServer(app);
     let request;
-    beforeEach(() => {
+    beforeEach( async () => {
         request = chai.request(server);
-    })
+
+        const comment = await Comment.create({
+            hobbyId: 4,
+            content: "TEST COMMENT"
+        });
+        return comment;
+    });
+
+    afterEach( async () => {
+        await Comment.destroy({
+            where: {
+                content: "TEST COMMENT"
+            }
+        });
+    });
 
     it("get all hobbies", async () => {
         //Setup
@@ -124,4 +138,19 @@ describe("Hobby Api Server", () => {
             }
         });
     });
+
+    it("delete comments", async () => {
+        //Setup
+
+        //Exercise
+        const res = await request.delete("/api/hobby/comment/28");
+
+        //Assert
+        res.should.have.status(204);
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        // assert.equal(res.body.content, expect);
+
+        //Teardown
+    });
+
 });
