@@ -14,30 +14,4 @@ router.get('/debug', (req, res) => {
   res.status(200);
 })
 
-// router.get('/api/hobby', function(req, res, next) {
-//   Hobby.findAll().then(hobbies => {
-//     res.send(hobbies);
-//   });
-// });
-
-// router.get('/api/hobby/:id', function(req, res, next) {
-//   Hobby.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(hobbies => {
-//     res.send(hobbies);
-//   });
-// });
-
-// router.get('/api/hobby/:id/comment', function(req, res, next) {
-//   Comment.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(comment => {
-//     res.send(comment);
-//   });
-// });
-
 module.exports = router;

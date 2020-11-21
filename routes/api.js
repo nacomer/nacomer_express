@@ -6,6 +6,8 @@ router.get('/hobby', apiController.getAllHobbies);
 
 router.get('/hobby/:id', apiController.getHobby);
 
+router.get('/hobby/:id/comment', apiController.getAllComments);
+
 // router.get('/api/hobby/:id', function(req, res, next) {
 //   Hobby.findAll({
 //     where: {

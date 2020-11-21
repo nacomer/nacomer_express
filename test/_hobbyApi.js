@@ -72,7 +72,30 @@ describe("Hobby Api Server", () => {
         //Exercise
         const res = await request.get("/api/hobby/1");
         //Assert
+        res.should.have.status(200);
+        res.should.be.json;
         assert.equal(res.body[0][Goods.goodsName], specificHobby[0][Goods.goodsName]);
+        //Teardown
+    });
+
+    it("get all comments", async () => {
+        //Setup
+        const allComments = await Comment.findAll({
+            raw: true,
+            where: {
+                hobbyId: 1
+            },
+            attributes: ['id', 'content']
+        }
+        );
+
+        //Exercise
+        const res = await request.get("/api/hobby/1/comment");
+        //Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        JSON.parse(res.text).should.deep.equal(allComments);
+
         //Teardown
     });
 });

@@ -12,11 +12,11 @@ exports.getAllHobbies = async function () {
     return result;
 };
 
-exports.getHobby = async function () {
+exports.getHobby = async function (reqHobbyId) {
         const specificHobby = await Hobby.findAll({
             raw:true,
             where: {
-                id:1
+                id:reqHobbyId
             },
             include: [
                 {
@@ -40,6 +40,19 @@ exports.getHobby = async function () {
         );
     return specificHobby;
 };
+
+
+exports.getAllComments = async function (reqHobbyId) {
+    const result = await Comment.findAll({
+        where: {
+            hobbyId:reqHobbyId
+        },
+        raw:true,
+        attributes: ['id', 'content']
+    });
+    return result;
+};
+
 
 // module.exports = async (req, res, next) => {
     
