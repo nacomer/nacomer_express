@@ -83,13 +83,23 @@ exports.putComment = async function (reqCommentId, reqContent) {
 };
 
 exports.deleteComment = async function (reqCommentId) {
+    const comment = await Comment.findOne({
+        where : {
+            id: reqCommentId
+        }
+    });
     try {
-        const deleteCount = await Comment.destroy({
-            where: {
-                id: reqCommentId
-            }
-        });
-        return deleteCount;
+        // const result = await comment.destroy();
+        await comment.destroy();
+
+        // const deleteCount = await Comment.destroy({
+        //     where: {
+        //         id: reqCommentId
+        //     }
+        // });
+        // return result;
+        return;
+
     } catch(err) {
         console.log(err);
     }
