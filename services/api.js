@@ -6,7 +6,7 @@ const Goods = require('../models').Goods;
 
 exports.getAllHobbies = async function () {
     const result = await Hobby.findAll({
-        raw: true,
+        // raw: true,
         attributes: ['id', 'name', 'mainPicture', 'period']
     });
     return result;
@@ -14,7 +14,7 @@ exports.getAllHobbies = async function () {
 
 exports.getHobby = async function (reqHobbyId) {
     const specificHobby = await Hobby.findAll({
-        raw: true,
+        // raw: true,
         where: {
             id: reqHobbyId
         },
@@ -46,7 +46,7 @@ exports.getAllComments = async function (reqHobbyId) {
         where: {
             hobbyId: reqHobbyId
         },
-        raw: true,
+        // raw: true,
         attributes: ['id', 'content']
     });
     return result;
@@ -73,12 +73,7 @@ exports.putComment = async function (reqCommentId, reqContent) {
     const updated = await comment.update({
         content: reqContent
     });
-    // const comment = await Comment.update(
-    //     { content: reqContent},
-    //     { where: 
-    //         { id: reqCommentId }
-    //     }
-    // );
+
     return updated;
 };
 
@@ -92,22 +87,9 @@ exports.deleteComment = async function (reqCommentId) {
         // const result = await comment.destroy();
         await comment.destroy();
 
-        // const deleteCount = await Comment.destroy({
-        //     where: {
-        //         id: reqCommentId
-        //     }
-        // });
-        // return result;
         return;
 
     } catch(err) {
         console.log(err);
     }
 };
-
-// module.exports = async (req, res, next) => {
-
-//     const getAllHobbies = async (req, res) => {
-
-//     }
-// };

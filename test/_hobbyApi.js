@@ -89,7 +89,9 @@ describe("Hobby Api Server", () => {
         //Assert
         res.should.have.status(200);
         res.should.be.json;
+        // JSON.parse(res.text).should.deep.equal(specificHobby);
         assert.equal(res.body[0][Goods.goodsName], specificHobby[0][Goods.goodsName]);
+        
         //Teardown
     });
 
