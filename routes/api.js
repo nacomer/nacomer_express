@@ -10,6 +10,8 @@ router.get('/hobby/:id/comment', apiController.getAllComments);
 
 router.post('/hobby/:id/comment', apiController.postComment);
 
+router.put('/hobby/comment/:id', apiController.putComment);
+
 router.delete('/hobby/comment/:id', apiController.deleteComment);
 
 
