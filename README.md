@@ -4,7 +4,7 @@ This was created during my time as a student at [Code Chrysalis](https://codechr
 
 # ローカル環境 Setup
 
-.envの修正
+## .envの修正
 ```
 PORT=5000
 DB_NAME=nacomer
@@ -13,18 +13,24 @@ DB_PASSWORD=　※各ローカル環境に合わせて修正
 DB_HOST=　※各ローカル環境に合わせて修正
 ```
 
-DBの初期設定
+## 初期設定
+- 初期化（初期インストール）
 ```
-初期化
 $ yarn
+```
 
-DB作成
+- DB作成
+```
 $ yarn createdb
+```
 
-TBL作成
+- TBL作成
+```
 $ yarn migrate
+```
 
-レコード投入
+- レコード投入
+```
 $ yarn seed
 ```
 

@@ -66,19 +66,19 @@ describe("Hobby Api Server", () => {
             include: [
                 {
                     model: Comment, as: 'Comments',
-                    required: true,
+                    required: false,
                     attributes: ['content']
                 }, {
                     model: Goods, as: 'Goods',
-                    required: true,
+                    required: false,
                     attributes: ['goodsName', 'goodsPicture']
                 }, {
                     model: SubPicture, as: 'SubPictures',
-                    required: true,
+                    required: false,
                     attributes: ['subPicture']
                 }, {
                     model: Video, as: 'Videos',
-                    required: true,
+                    required: false,
                     attributes: ['videoURL']
                 }]
         }
