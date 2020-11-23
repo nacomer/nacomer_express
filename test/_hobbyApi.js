@@ -209,5 +209,33 @@ describe("Hobby Api Server", () => {
         //Teardown
     });
 
+    it("post user", async () => {
+        //Setup
+        const expect = {
+            name:"TEST",
+            password:"TEST"
+        };
+        const postUser = {
+            name:"TEST",
+            password:"TEST"
+        }
+
+        //Exercise
+        const res = await request.post("/api/user").send(postUser);
+
+        //Assert
+        res.should.have.status(201);
+        res.should.be.json;
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        assert.equal(res.body.content, expect);
+
+        //Teardown
+        await Comment.destroy({
+            where: {
+                content: "ゴルフ場は埼玉が安くてよい"
+            }
+        });
+    });
+
 
 });

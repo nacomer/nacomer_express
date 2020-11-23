@@ -48,7 +48,7 @@ exports.getAllComments = async function (reqHobbyId) {
             hobbyId: reqHobbyId
         },
         // raw: true,
-        attributes: ['content','createdAt','updatedAt'],
+        attributes: ['id','content','createdAt','updatedAt'],
         order: [['createdAt', 'DESC']]
     });
     return result;
@@ -100,10 +100,11 @@ exports.deleteComment = async function (reqCommentId) {
 
 exports.getUser = async function (reqUserId) {
     const result = await NacomerUser.findAll({
+        raw: true,
         where: {
             id: reqUserId
         },
-        attributes: ['name','password']
+        attributes: ['id','name']
     });
     return result;
 };
