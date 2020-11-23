@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       goodsName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       hobbyId: {
@@ -20,6 +21,7 @@ module.exports = {
         }
       },
       goodsPicture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

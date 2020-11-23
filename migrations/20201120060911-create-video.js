@@ -17,6 +17,7 @@ module.exports = {
         }
       },
       videoURL: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

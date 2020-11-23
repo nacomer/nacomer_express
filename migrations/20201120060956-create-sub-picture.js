@@ -17,6 +17,7 @@ module.exports = {
         }
       },
       subPicture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
