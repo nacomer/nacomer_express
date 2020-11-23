@@ -14,12 +14,17 @@ module.exports = (sequelize, DataTypes) => {
       Comment.belongsTo(models.Hobby, {
         foreignKey: 'hobbyId',
         onDelete: 'CASCADE',
-      })
+      });
+      // Comment.belongsTo(models.NacomerUser, {
+      //   foreignKey: 'nacomerUserId',
+      //   onDelete: 'CASCADE',
+      // })
     };
   };
   Comment.init({
     hobbyId: DataTypes.INTEGER,
-    content: DataTypes.STRING
+    content: DataTypes.STRING,
+    // nacomerUserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Comment',

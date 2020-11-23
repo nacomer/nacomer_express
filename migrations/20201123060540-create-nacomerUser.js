@@ -1,33 +1,21 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Comments', {
+    await queryInterface.createTable('NacomerUsers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      hobbyId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Hobbies',
-          key: 'id',
-        }
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
-      // // nacomerUserId: {
-      // //   type: Sequelize.INTEGER,
-      // //   onDelete: 'CASCADE',
-      // //   references: {
-      // //     model: 'NacomerUsers',
-      // //     key: 'id',
-      // //   }
-      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -39,6 +27,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Comments');
+    await queryInterface.dropTable('NacomerUsers');
   }
 };
