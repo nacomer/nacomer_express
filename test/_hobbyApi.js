@@ -194,9 +194,11 @@ describe("Hobby Api Server", () => {
             where: {
                 id: 1
             },
-            attributes: ['name', 'password']
+            attributes: ['id','name']
         }
         );
+
+        user[0]["Auth"]="true";
 
         //Exercise
         const res = await request.get("/api/user/1");
@@ -211,10 +213,6 @@ describe("Hobby Api Server", () => {
 
     it("post user", async () => {
         //Setup
-        const expect = {
-            name:"TEST",
-            password:"TEST"
-        };
         const postUser = {
             name:"TEST",
             password:"TEST"
@@ -226,13 +224,11 @@ describe("Hobby Api Server", () => {
         //Assert
         res.should.have.status(201);
         res.should.be.json;
-        // JSON.parse(res.body.content).to.be.equal(postComment);
-        assert.equal(res.body.content, expect);
 
         //Teardown
-        await Comment.destroy({
+        await NacomerUser.destroy({
             where: {
-                content: "ゴルフ場は埼玉が安くてよい"
+                name: "TEST"
             }
         });
     });
