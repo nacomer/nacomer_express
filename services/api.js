@@ -22,7 +22,8 @@ exports.getHobby = async function (reqHobbyId) {
             {
                 model: Comment, as: 'Comments',
                 required: false,
-                attributes: ['content']
+                attributes: ['content','createdAt','updatedAt'],
+                order: [['createdAt', 'DESC']]
             }, {
                 model: Goods, as: 'Goods',
                 required: false,
