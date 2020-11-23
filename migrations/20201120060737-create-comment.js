@@ -13,6 +13,7 @@ module.exports = {
       },
       hobbyId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Hobbies',
           key: 'id',

@@ -60,6 +60,41 @@ exports.postComment = async function (reqHobbyId, reqContent) {
     });
     return comment;
 };
+
+exports.putComment = async function (reqCommentId, reqContent) {
+    // 最初に fineOne で 行を特定する
+    const comment = await Comment.findOne({
+        where : {
+            id: reqCommentId
+        }
+    });
+
+    // 特定した行に対して、update を実行する。
+    const updated = await comment.update({
+        content: reqContent
+    });
+    // const comment = await Comment.update(
+    //     { content: reqContent},
+    //     { where: 
+    //         { id: reqCommentId }
+    //     }
+    // );
+    return updated;
+};
+
+exports.deleteComment = async function (reqCommentId) {
+    try {
+        const deleteCount = await Comment.destroy({
+            where: {
+                id: reqCommentId
+            }
+        });
+        return deleteCount;
+    } catch(err) {
+        console.log(err);
+    }
+};
+
 // module.exports = async (req, res, next) => {
 
 //     const getAllHobbies = async (req, res) => {

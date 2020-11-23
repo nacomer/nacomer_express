@@ -17,9 +17,26 @@ chai.should();
 describe("Hobby Api Server", () => {
     const server = http.createServer(app);
     let request;
-    beforeEach(() => {
+    let TEST_COMMENT_ID;
+
+    beforeEach( async () => {
         request = chai.request(server);
-    })
+
+        const comment = await Comment.create({
+            hobbyId: 1,
+            content: "TEST COMMENT"
+        });
+        TEST_COMMENT_ID = comment.id;
+        return comment;
+    });
+
+    afterEach( async () => {
+        await Comment.destroy({
+            where: {
+                content: "TEST COMMENT"
+            }
+        });
+    });
 
     it("get all hobbies", async () => {
         //Setup
@@ -27,8 +44,6 @@ describe("Hobby Api Server", () => {
             raw: true,
             attributes: ['id', 'name', 'mainPicture', 'period']
         });
-
-        // const allHobbiesJson = allHobbies.map(hobby => hobby.dataValues);
 
         //Exercise
         const res = await request.get("/api/hobby");
@@ -124,4 +139,43 @@ describe("Hobby Api Server", () => {
             }
         });
     });
+
+    it("put comment", async () => {
+        //Setup
+        const expect = "ゴルフ場は実は千葉も良い";
+        const putComment = {
+            content: "ゴルフ場は実は千葉も良い"
+        }
+
+        //Exercise
+        const res = await request.put("/api/hobby/comment/"+ TEST_COMMENT_ID).send(putComment);
+
+        //Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        assert.equal(res.body.content, expect);
+
+        //Teardown
+        // await Comment.destroy({
+        //     where: {
+        //         content: "ゴルフ場は埼玉が安くてよい"
+        //     }
+        // });
+    });
+
+    // it("delete comments", async () => {
+    //     //Setup
+
+    //     //Exercise
+    //     const res = await request.delete("/api/hobby/comment/"+ TEST_COMMENT_ID);
+
+    //     //Assert
+    //     res.should.have.status(204);
+    //     // JSON.parse(res.body.content).to.be.equal(postComment);
+    //     // assert.equal(res.body.content, expect);
+
+    //     //Teardown
+    // });
+
 });

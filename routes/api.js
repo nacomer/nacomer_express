@@ -10,24 +10,9 @@ router.get('/hobby/:id/comment', apiController.getAllComments);
 
 router.post('/hobby/:id/comment', apiController.postComment);
 
-// router.get('/api/hobby/:id', function(req, res, next) {
-//   Hobby.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(hobbies => {
-//     res.send(hobbies);
-//   });
-// });
+router.put('/hobby/comment/:id', apiController.putComment);
 
-// router.get('/api/hobby/:id/comment', function(req, res, next) {
-//   Comment.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(comment => {
-//     res.send(comment);
-//   });
-// });
+router.delete('/hobby/comment/:id', apiController.deleteComment);
+
 
 module.exports = router;
