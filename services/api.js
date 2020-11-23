@@ -102,11 +102,11 @@ exports.deleteComment = async function (reqCommentId) {
 };
 
 exports.getUser = async function (reqName,reqPassword) {
-    const result = await NacomerUser.findAll({
+    const result = await NacomerUser.findOne({
         raw: true,
         where: {
             name: reqName,
-            name: reqPassword
+            password: reqPassword
         },
         attributes: ['id', 'name']
     });

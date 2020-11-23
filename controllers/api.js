@@ -66,7 +66,7 @@ exports.getUser = async function (req, res, next) {
     try {
         const user = await apiService.getUser(req.body.name,req.body.password);
         if(user !== undefined){
-            user[0]["Auth"]="true";
+            user["Auth"]="true";
         }
         return res.status(200).json(user);
     } catch (e) {
