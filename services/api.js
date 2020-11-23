@@ -47,9 +47,15 @@ exports.getAllComments = async function (reqHobbyId) {
         where: {
             hobbyId: reqHobbyId
         },
-        // raw: true,
-        attributes: ['id','content','createdAt','updatedAt'],
-        order: [['createdAt', 'DESC']]
+        include: [
+            {
+                model: NacomerUser, as: 'NacomerUser',
+                required: false,
+                attributes: ['id','name']
+            }
+        ],
+        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'content', 'createdAt', 'updatedAt']
     });
     return result;
 };
@@ -65,7 +71,7 @@ exports.postComment = async function (reqHobbyId, reqContent) {
 exports.putComment = async function (reqCommentId, reqContent) {
     // 最初に fineOne で 行を特定する
     const comment = await Comment.findOne({
-        where : {
+        where: {
             id: reqCommentId
         }
     });
@@ -80,7 +86,7 @@ exports.putComment = async function (reqCommentId, reqContent) {
 
 exports.deleteComment = async function (reqCommentId) {
     const comment = await Comment.findOne({
-        where : {
+        where: {
             id: reqCommentId
         }
     });
@@ -90,20 +96,19 @@ exports.deleteComment = async function (reqCommentId) {
 
         return;
 
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 };
 
-
-
-exports.getUser = async function (reqUserId) {
-    const result = await NacomerUser.findAll({
+exports.getUser = async function (reqName,reqPassword) {
+    const result = await NacomerUser.findOne({
         raw: true,
         where: {
-            id: reqUserId
+            name: reqName,
+            password: reqPassword
         },
-        attributes: ['id','name']
+        attributes: ['id', 'name']
     });
     return result;
 };
