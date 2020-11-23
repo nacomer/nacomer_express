@@ -20,14 +20,6 @@ module.exports = {
           key: 'id',
         }
       },
-      // // nacomerUserId: {
-      // //   type: Sequelize.INTEGER,
-      // //   onDelete: 'CASCADE',
-      // //   references: {
-      // //     model: 'NacomerUsers',
-      // //     key: 'id',
-      // //   }
-      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
