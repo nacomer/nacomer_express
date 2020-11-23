@@ -60,3 +60,17 @@ exports.deleteComment = async function (req, res, next) {
         return res.status(400).json({ status: 400, message: e.message });
     }
 };
+
+
+exports.getUser = async function (req, res, next) {
+    try {
+        const user = await apiService.getUser(req.params.id);
+        console.log("AAAAAAAA"+user.typeOf);
+        if(user !== undefined){
+            user[0]["Auth"]="true";
+        }
+        return res.status(200).json(user);
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+};

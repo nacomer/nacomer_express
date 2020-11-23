@@ -5,6 +5,7 @@ const Comment = require('../models').Comment;
 const Video = require('../models').Video;
 const SubPicture = require('../models').SubPicture;
 const Goods = require('../models').Goods;
+const NacomerUser = require('../models').NacomerUser;
 const assert = chai.assert;
 const expect = chai.expect;
 
@@ -102,17 +103,25 @@ describe("Hobby Api Server", () => {
             where: {
                 hobbyId: 1
             },
-            attributes: ['id', 'content']
+            attributes: ['content','createdAt','updatedAt'],
+            order: [['createdAt', 'DESC']]
         }
         );
 
+        const mapExpectComments = allComments.map((data)=>{
+            return data.content;
+        })
+
         //Exercise
         const res = await request.get("/api/hobby/1/comment");
+        const mapActualComments = res.body.map((data)=>{
+            return data.content;
+        })
 
         //Assert
         res.should.have.status(200);
         res.should.be.json;
-        JSON.parse(res.text).should.deep.equal(allComments);
+        mapActualComments.should.deep.equal(mapExpectComments);
 
         //Teardown
     });
@@ -150,7 +159,7 @@ describe("Hobby Api Server", () => {
         }
 
         //Exercise
-        const res = await request.put("/api/hobby/comment/"+ TEST_COMMENT_ID).send(putComment);
+        const res = await request.put("/api/comment/"+ TEST_COMMENT_ID).send(putComment);
 
         //Assert
         res.should.have.status(200);
@@ -170,12 +179,63 @@ describe("Hobby Api Server", () => {
         //Setup
 
         //Exercise
-        const res = await request.delete("/api/hobby/comment/"+ TEST_COMMENT_ID);
+        const res = await request.delete("/api/comment/"+ TEST_COMMENT_ID);
 
         //Assert
         res.should.have.status(204);
 
         //Teardown
     });
+
+    it("get User", async () => {
+        //Setup
+        const user = await NacomerUser.findAll({
+            raw: true,
+            where: {
+                id: 1
+            },
+            attributes: ['name', 'password']
+        }
+        );
+
+        //Exercise
+        const res = await request.get("/api/user/1");
+
+        //Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        JSON.parse(res.text).should.deep.equal(user);
+
+        //Teardown
+    });
+
+    it("post user", async () => {
+        //Setup
+        const expect = {
+            name:"TEST",
+            password:"TEST"
+        };
+        const postUser = {
+            name:"TEST",
+            password:"TEST"
+        }
+
+        //Exercise
+        const res = await request.post("/api/user").send(postUser);
+
+        //Assert
+        res.should.have.status(201);
+        res.should.be.json;
+        // JSON.parse(res.body.content).to.be.equal(postComment);
+        assert.equal(res.body.content, expect);
+
+        //Teardown
+        await Comment.destroy({
+            where: {
+                content: "ゴルフ場は埼玉が安くてよい"
+            }
+        });
+    });
+
 
 });
