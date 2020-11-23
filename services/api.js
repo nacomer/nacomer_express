@@ -3,6 +3,7 @@ const Comment = require('../models').Comment;
 const Video = require('../models').Video;
 const SubPicture = require('../models').SubPicture;
 const Goods = require('../models').Goods;
+const NacomerUser = require('../models').NacomerUser;
 
 exports.getAllHobbies = async function () {
     const result = await Hobby.findAll({
@@ -93,4 +94,16 @@ exports.deleteComment = async function (reqCommentId) {
     } catch(err) {
         console.log(err);
     }
+};
+
+
+
+exports.getUser = async function (reqUserId) {
+    const result = await NacomerUser.findAll({
+        where: {
+            id: reqUserId
+        },
+        attributes: ['name','password']
+    });
+    return result;
 };
