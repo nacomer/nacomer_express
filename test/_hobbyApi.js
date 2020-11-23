@@ -150,7 +150,7 @@ describe("Hobby Api Server", () => {
         }
 
         //Exercise
-        const res = await request.put("/api/hobby/comment/"+ TEST_COMMENT_ID).send(putComment);
+        const res = await request.put("/api/comment/"+ TEST_COMMENT_ID).send(putComment);
 
         //Assert
         res.should.have.status(200);
@@ -170,7 +170,7 @@ describe("Hobby Api Server", () => {
         //Setup
 
         //Exercise
-        const res = await request.delete("/api/hobby/comment/"+ TEST_COMMENT_ID);
+        const res = await request.delete("/api/comment/"+ TEST_COMMENT_ID);
 
         //Assert
         res.should.have.status(204);
