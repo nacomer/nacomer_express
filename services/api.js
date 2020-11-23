@@ -54,7 +54,6 @@ exports.getAllComments = async function (reqHobbyId) {
     return result;
 };
 
-//TODO commentのNULLを制限する
 exports.postComment = async function (reqHobbyId, reqContent) {
     const comment = await Comment.create({
         hobbyId: reqHobbyId,
@@ -107,4 +106,12 @@ exports.getUser = async function (reqUserId) {
         attributes: ['id','name']
     });
     return result;
+};
+
+exports.postUser = async function (req) {
+    const user = await NacomerUser.create({
+        name: req.name,
+        password: req.password
+    });
+    return user;
 };

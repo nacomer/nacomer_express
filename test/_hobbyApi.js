@@ -213,10 +213,6 @@ describe("Hobby Api Server", () => {
 
     it("post user", async () => {
         //Setup
-        const expect = {
-            name:"TEST",
-            password:"TEST"
-        };
         const postUser = {
             name:"TEST",
             password:"TEST"
@@ -228,7 +224,6 @@ describe("Hobby Api Server", () => {
         //Assert
         res.should.have.status(201);
         res.should.be.json;
-        assert.equal(res.body.content, expect);
 
         //Teardown
         await NacomerUser.destroy({
