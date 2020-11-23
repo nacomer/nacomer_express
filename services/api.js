@@ -22,8 +22,7 @@ exports.getHobby = async function (reqHobbyId) {
             {
                 model: Comment, as: 'Comments',
                 required: false,
-                attributes: ['content','createdAt','updatedAt'],
-                order: [['createdAt', 'DESC']]
+                attributes: ['content']
             }, {
                 model: Goods, as: 'Goods',
                 required: false,
@@ -48,7 +47,8 @@ exports.getAllComments = async function (reqHobbyId) {
             hobbyId: reqHobbyId
         },
         // raw: true,
-        attributes: ['id', 'content']
+        attributes: ['content','createdAt','updatedAt'],
+        order: [['createdAt', 'DESC']]
     });
     return result;
 };
