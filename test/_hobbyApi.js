@@ -116,7 +116,7 @@ describe("Hobby Api Server", () => {
         const res = await request.get("/api/hobby/1/comment");
         const mapActualComments = res.body.map((data)=>{
             return data.content;
-        })
+        });
 
         //Assert
         res.should.have.status(200);
@@ -192,7 +192,8 @@ describe("Hobby Api Server", () => {
         const user = await NacomerUser.findAll({
             raw: true,
             where: {
-                id: 1
+                name:"AAA",
+                password:"AAA"
             },
             attributes: ['id','name']
         }
@@ -200,8 +201,13 @@ describe("Hobby Api Server", () => {
 
         user[0]["Auth"]="true";
 
+        const tempUser={
+            name:"AAA",
+            password:"AAA"
+        };
+
         //Exercise
-        const res = await request.get("/api/user/1");
+        const res = await request.get("/api/user").send(tempUser);
 
         //Assert
         res.should.have.status(200);

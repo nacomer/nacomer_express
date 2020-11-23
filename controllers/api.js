@@ -64,7 +64,7 @@ exports.deleteComment = async function (req, res, next) {
 
 exports.getUser = async function (req, res, next) {
     try {
-        const user = await apiService.getUser(req.params.id);
+        const user = await apiService.getUser(req.body.name,req.body.password);
         if(user !== undefined){
             user[0]["Auth"]="true";
         }

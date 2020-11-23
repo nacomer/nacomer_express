@@ -14,7 +14,7 @@ router.put('/comment/:id', apiController.putComment);
 
 router.delete('/comment/:id', apiController.deleteComment);
 
-router.get('/user/:id', apiController.getUser);
+router.get('/user', apiController.getUser);
 
 router.post('/user', apiController.postUser);
 
