@@ -27,6 +27,7 @@ $ yarn createdb
 - TBL作成
 ```
 $ yarn migrate
+※Migrationファイルの実行時、「NacomerUser」⇒「Comment」の順でマイグレーションしないとエラーになりますので、気を付けてください。
 ```
 
 - レコード投入
