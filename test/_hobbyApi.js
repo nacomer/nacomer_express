@@ -89,7 +89,9 @@ describe("Hobby Api Server", () => {
         //Assert
         res.should.have.status(200);
         res.should.be.json;
+        // JSON.parse(res.text).should.deep.equal(specificHobby);
         assert.equal(res.body[0][Goods.goodsName], specificHobby[0][Goods.goodsName]);
+        
         //Teardown
     });
 
@@ -144,7 +146,7 @@ describe("Hobby Api Server", () => {
         //Setup
         const expect = "ゴルフ場は実は千葉も良い";
         const putComment = {
-            content: "ゴルフ場は実は千葉も良い"
+            content: expect
         }
 
         //Exercise
@@ -157,25 +159,23 @@ describe("Hobby Api Server", () => {
         assert.equal(res.body.content, expect);
 
         //Teardown
-        // await Comment.destroy({
-        //     where: {
-        //         content: "ゴルフ場は埼玉が安くてよい"
-        //     }
-        // });
+        await Comment.destroy({
+            where: {
+                content: expect
+            }
+        });
     });
 
-    // it("delete comments", async () => {
-    //     //Setup
+    it("delete comments", async () => {
+        //Setup
 
-    //     //Exercise
-    //     const res = await request.delete("/api/hobby/comment/"+ TEST_COMMENT_ID);
+        //Exercise
+        const res = await request.delete("/api/hobby/comment/"+ TEST_COMMENT_ID);
 
-    //     //Assert
-    //     res.should.have.status(204);
-    //     // JSON.parse(res.body.content).to.be.equal(postComment);
-    //     // assert.equal(res.body.content, expect);
+        //Assert
+        res.should.have.status(204);
 
-    //     //Teardown
-    // });
+        //Teardown
+    });
 
 });
