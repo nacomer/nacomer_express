@@ -26,6 +26,7 @@ jobs:
           DB_USER: postgres
           DB_NAME: nacomer
           DB_HOST: 127.0.0.1
+          JWT_KEY: 071682fa4952f593f1a2293aa3cdb9b8d7e669f5a4a37049e714f660f264087c6411e2b39339e992848373505cd73595433cd1b84623cf4101989b6bd273c2db
       - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_USER: postgres 
