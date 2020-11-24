@@ -274,4 +274,33 @@ describe("Hobby Api Server", () => {
       },
     });
   });
+
+  it("get User", async () => {
+    //Setup
+    const testUser = {
+      name: "AAA",
+      password: "AAA",
+    };
+    const testLogin = await request.post("/api/user/login").send(testUser);
+    assert.equal(testLogin.body.isSuccess, true);
+
+    const expect = {
+      id: 1,
+      name: "AAA",
+    };
+
+    // Exercise
+    const auth = testLogin.body.token;
+    const res = await request
+      .get("/api/user/login")
+      .set("Authorization", "Bearer " + auth)
+      .send(testUser);
+
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    JSON.parse(res.text).should.deep.equal(expect);
+
+    //Teardown
+  });
 });
