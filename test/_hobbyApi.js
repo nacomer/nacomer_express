@@ -26,6 +26,7 @@ describe("Hobby Api Server", () => {
     const comment = await Comment.create({
       hobbyId: 1,
       content: "TEST COMMENT",
+      nacomerUserId: 1,
     });
     TEST_COMMENT_ID = comment.id;
     return comment;
