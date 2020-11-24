@@ -213,16 +213,16 @@ describe("Hobby Api Server", () => {
 
   it("get User, login", async () => {
     //Setup
-    const user = await NacomerUser.findOne({
-      raw: true,
-      where: {
-        name: "AAA",
-        password: "AAA",
-      },
-      attributes: ["id", "name"],
-    });
+    // const user = await NacomerUser.findOne({
+    //   raw: true,
+    //   where: {
+    //     name: "AAA",
+    //     password: "AAA",
+    //   },
+    //   attributes: ["id", "name"],
+    // });
 
-    user["Auth"] = "true";
+    // user["Auth"] = "true";
 
     const tempUser = {
       name: "AAA",
@@ -235,7 +235,7 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    JSON.parse(res.text).should.deep.equal(user);
+    assert.equal(res.body.isSuccess, true);
 
     //Teardown
   });
