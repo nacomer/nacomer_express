@@ -33,7 +33,8 @@ exports.postComment = async function (req, res) {
   try {
     const comment = await apiService.postComment(
       req.params.id,
-      req.body.content
+      req.body.content,
+      req.body.nacomerUserId
     );
     return res.status(201).json({ id: comment.id, content: comment.content });
   } catch (e) {

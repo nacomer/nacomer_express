@@ -152,6 +152,7 @@ describe("Hobby Api Server", () => {
     const postComment = {
       hobbyId: 1,
       content: "ゴルフ場は埼玉が安くてよい",
+      nacomerUserId: 1,
     };
 
     //Exercise
