@@ -21,6 +21,7 @@ module.exports = {
         },
       },
       nacomerUserId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
         references: {
