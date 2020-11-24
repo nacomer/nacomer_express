@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SubPicture extends Model {
     /**
@@ -12,17 +10,20 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       SubPicture.belongsTo(models.Hobby, {
-        foreignKey: 'hobbyId',
-        onDelete: 'CASCADE',
-    })
+        foreignKey: "hobbyId",
+        onDelete: "CASCADE",
+      });
     }
-  };
-  SubPicture.init({
-    hobbyId: DataTypes.INTEGER,
-    subPicture: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'SubPicture',
-  });
+  }
+  SubPicture.init(
+    {
+      hobbyId: DataTypes.INTEGER,
+      subPicture: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "SubPicture",
+    }
+  );
   return SubPicture;
 };
