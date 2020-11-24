@@ -33,3 +33,12 @@ exports.postUser = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
+exports.getLoginUser = async function (req, res) {
+  try {
+    const user = await usersService.getUser(req.body.name, req.body.password);
+    return res.status(200).json(user);
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};

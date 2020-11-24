@@ -29,7 +29,6 @@ exports.getAllComments = async function (req, res) {
 
 exports.postComment = async function (req, res) {
   try {
-    console.info("---------" + req.decoded);
     const comment = await hobbyService.postComment(
       req.params.id,
       req.body.content,
