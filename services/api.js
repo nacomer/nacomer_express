@@ -71,10 +71,15 @@ exports.getAllComments = async function (reqHobbyId) {
   return result;
 };
 
-exports.postComment = async function (reqHobbyId, reqContent) {
+exports.postComment = async function (
+  reqHobbyId,
+  reqContent,
+  reqNacomerUserId
+) {
   const comment = await Comment.create({
     hobbyId: reqHobbyId,
     content: reqContent,
+    nacomerUserId: reqNacomerUserId,
   });
   return comment;
 };

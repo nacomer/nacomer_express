@@ -16,9 +16,10 @@ module.exports = {
     return queryInterface.bulkInsert(
       "NacomerUsers",
       [
-        { name: "AAA", password: "AAA", createdAt: now, updatedAt: now },
-        { name: "BBB", password: "CCC", createdAt: now, updatedAt: now },
-        { name: "CCC", password: "CCC", createdAt: now, updatedAt: now },
+        { id: 0, name: "guest", password: "guest", createdAt: now, updatedAt: now },
+        { id: 1, name: "AAA", password: "AAA", createdAt: now, updatedAt: now },
+        { id: 2, name: "BBB", password: "BBB", createdAt: now, updatedAt: now },
+        { id: 3, name: "CCC", password: "CCC", createdAt: now, updatedAt: now },
       ],
       {}
     );
