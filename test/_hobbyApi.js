@@ -104,7 +104,8 @@ describe("Hobby Api Server", () => {
                 hobbyId: 1
             },
             attributes: ['content','createdAt','updatedAt'],
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC'],
+                     ['id', 'ASC']],
         }
         );
 
@@ -189,7 +190,7 @@ describe("Hobby Api Server", () => {
 
     it("get User", async () => {
         //Setup
-        const user = await NacomerUser.findAll({
+        const user = await NacomerUser.findOne({
             raw: true,
             where: {
                 name:"AAA",
@@ -199,7 +200,7 @@ describe("Hobby Api Server", () => {
         }
         );
 
-        user[0]["Auth"]="true";
+        user["Auth"]="true";
 
         const tempUser={
             name:"AAA",
