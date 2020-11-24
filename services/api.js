@@ -36,13 +36,13 @@ exports.getHobby = async function (reqHobbyId) {
         model: SubPicture,
         as: "SubPictures",
         required: false,
-        attributes: ["subPicture"],
+        attributes: ["subPicture", "description"],
       },
       {
         model: Video,
         as: "Videos",
         required: false,
-        attributes: ["videoURL"],
+        attributes: ["videoURL", "description"],
       },
     ],
   });

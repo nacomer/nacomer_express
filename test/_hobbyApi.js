@@ -81,13 +81,13 @@ describe("Hobby Api Server", () => {
           model: SubPicture,
           as: "SubPictures",
           required: false,
-          attributes: ["subPicture","description"],
+          attributes: ["subPicture", "description"],
         },
         {
           model: Video,
           as: "Videos",
           required: false,
-          attributes: ["videoURL","description"],
+          attributes: ["videoURL", "description"],
         },
       ],
     });
@@ -103,13 +103,13 @@ describe("Hobby Api Server", () => {
       specificHobby[0][Goods.goodsName]
     );
     assert.equal(
-        res.body[0][Videos.description],
-        specificHobby[0][Videos.description]
-      );
-      assert.equal(
-        res.body[0][SubPictures.description],
-        specificHobby[0][SubPictures.description]
-      );
+      res.body[0][Video.description],
+      specificHobby[0][Video.description]
+    );
+    assert.equal(
+      res.body[0][SubPicture.description],
+      specificHobby[0][SubPicture.description]
+    );
 
     //Teardown
   });
