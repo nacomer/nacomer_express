@@ -248,6 +248,7 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
+    console.log(res.body);
     assert.equal(res.body.isSuccess, true);
 
     //Teardown
@@ -285,7 +286,7 @@ describe("Hobby Api Server", () => {
     assert.equal(testLogin.body.isSuccess, true);
 
     const expect = {
-      id: 1,
+      userId: 1,
       name: "AAA",
     };
 
@@ -293,8 +294,7 @@ describe("Hobby Api Server", () => {
     const auth = testLogin.body.token;
     const res = await request
       .get("/api/user/login")
-      .set("Authorization", "Bearer " + auth)
-      .send(testUser);
+      .set("Authorization", "Bearer " + auth);
 
     //Assert
     res.should.have.status(200);
