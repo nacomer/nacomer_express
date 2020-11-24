@@ -13,8 +13,8 @@
     "seed": "sequelize-cli db:seed:all",
     "userfile": "sequelize model:generate --name NacomerUser --attributes name:string,password:string",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test && yarn lint",
-    "prettier": "prettier --write *.js"
+    "prettier": "prettier --write ./*/*.js",
+    "test": "mocha test && yarn lint && yarn prettier"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
