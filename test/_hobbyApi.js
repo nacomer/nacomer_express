@@ -211,7 +211,7 @@ describe("Hobby Api Server", () => {
     //Teardown
   });
 
-  it("get User", async () => {
+  it("get User, login", async () => {
     //Setup
     const user = await NacomerUser.findOne({
       raw: true,
@@ -230,7 +230,7 @@ describe("Hobby Api Server", () => {
     };
 
     //Exercise
-    const res = await request.get("/api/user").send(tempUser);
+    const res = await request.post("/api/user/login").send(tempUser);
 
     //Assert
     res.should.have.status(200);
@@ -240,7 +240,7 @@ describe("Hobby Api Server", () => {
     //Teardown
   });
 
-  it("post user", async () => {
+  it("post user, signup", async () => {
     //Setup
     const postUser = {
       name: "TEST",
@@ -248,7 +248,7 @@ describe("Hobby Api Server", () => {
     };
 
     //Exercise
-    const res = await request.post("/api/user").send(postUser);
+    const res = await request.post("/api/user/register").send(postUser);
 
     //Assert
     res.should.have.status(201);
