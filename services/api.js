@@ -8,7 +8,7 @@ const NacomerUser = require('../models').NacomerUser;
 exports.getAllHobbies = async function () {
     const result = await Hobby.findAll({
         // raw: true,
-        attributes: ['id', 'name', 'mainPicture', 'period']
+        attributes: ['id', 'name', 'mainPicture', 'period'],
     });
     return result;
 };
@@ -54,7 +54,8 @@ exports.getAllComments = async function (reqHobbyId) {
                 attributes: ['id','name']
             }
         ],
-        order: [['createdAt', 'DESC']],
+        order: [['createdAt', 'DESC'],
+                ['id', 'ASC']],
         attributes: ['id', 'content', 'createdAt', 'updatedAt']
     });
     return result;
