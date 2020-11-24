@@ -10,8 +10,4 @@ router.get("/:id/comment", hobbyController.getAllComments);
 
 router.post("/:id/comment", hobbyController.postComment);
 
-// router.put("/comment/:id", apiController.putComment);
-
-// router.delete("/comment/:id", apiController.deleteComment);
-
 module.exports = router;

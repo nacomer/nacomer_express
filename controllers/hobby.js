@@ -1,8 +1,6 @@
 const hobbyService = require("../services/hobby");
 
 exports.getAllHobbies = async function (req, res) {
-  // const page = req.params.page ? req.params.page : 1;
-  // const limit = req.params.limit ? req.params.limit : 10;
   try {
     const hobbies = await hobbyService.getAllHobbies();
     return res.status(200).json(hobbies);
@@ -41,50 +39,3 @@ exports.postComment = async function (req, res) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
-
-// exports.putComment = async function (req, res) {
-//   try {
-//     const comment = await apiService.putComment(
-//       req.params.id,
-//       req.body.content
-//     );
-//     return res.status(200).json({ content: comment.content });
-//   } catch (e) {
-//     return res.status(400).json({ status: 400, message: e.message });
-//   }
-// };
-
-// exports.deleteComment = async function (req, res) {
-//   try {
-//     // const result = await apiService.deleteComment(req.params.id);
-//     await apiService.deleteComment(req.params.id);
-//     // if (result > 0) {
-//     return res.status(204).end();
-//     // } else {
-//     //     return res.status(202);
-//     // }
-//   } catch (e) {
-//     return res.status(400).json({ status: 400, message: e.message });
-//   }
-// };
-
-// exports.getUser = async function (req, res) {
-//   try {
-//     const user = await apiService.getUser(req.body.name, req.body.password);
-//     if (user !== undefined) {
-//       user["Auth"] = "true";
-//     }
-//     return res.status(200).json(user);
-//   } catch (e) {
-//     return res.status(400).json({ status: 400, message: e.message });
-//   }
-// };
-
-// exports.postUser = async function (req, res) {
-//   try {
-//     const user = await apiService.postUser(req.body);
-//     return res.status(201).json(user.id);
-//   } catch (e) {
-//     return res.status(400).json({ status: 400, message: e.message });
-//   }
-// };
