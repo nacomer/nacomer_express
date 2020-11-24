@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       hobbyId: DataTypes.INTEGER,
       videoURL: DataTypes.STRING,
+      description: DataTypes.STRING,
     },
     {
       sequelize,
