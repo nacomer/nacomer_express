@@ -13,7 +13,8 @@
     "seed": "sequelize-cli db:seed:all",
     "userfile": "sequelize model:generate --name NacomerUser --attributes name:string,password:string",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha test && yarn lint"
+    "test": "mocha test && yarn lint",
+    "prettier": "prettier --write *.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -36,6 +37,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
-    "prettier": "^2.2.0"
+    "prettier": "^2.2.0",
+    "prettier-eslint-cli": "^5.0.0",
+    "pretty-quick": "^3.1.0"
   }
 }
