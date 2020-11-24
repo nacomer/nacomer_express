@@ -9,16 +9,19 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       goodsName: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       hobbyId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Hobbies',
           key: 'id',
         }
       },
       goodsPicture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

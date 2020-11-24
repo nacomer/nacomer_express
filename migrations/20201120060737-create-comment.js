@@ -9,12 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       content: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       hobbyId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Hobbies',
+          key: 'id',
+        }
+      },
+      nacomerUserId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'NacomerUsers',
           key: 'id',
         }
       },

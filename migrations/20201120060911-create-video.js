@@ -10,12 +10,14 @@ module.exports = {
       },
       hobbyId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Hobbies',
           key: 'id',
         }
       },
       videoURL: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

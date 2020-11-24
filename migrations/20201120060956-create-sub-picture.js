@@ -10,12 +10,14 @@ module.exports = {
       },
       hobbyId: {
         type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
         references: {
           model: 'Hobbies',
           key: 'id',
         }
       },
-      subPictureURL: {
+      subPicture: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

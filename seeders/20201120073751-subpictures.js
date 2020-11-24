@@ -13,7 +13,12 @@ module.exports = {
     */
    const now = new Date();
     return queryInterface.bulkInsert('SubPictures', [
-      {hobbyId: 1, subPictureURL: "sub_golf", createdAt: now, updatedAt: now},
+      {hobbyId: 1, subPicture: "./image/sub_golf.png", createdAt: now, updatedAt: now},
+      {hobbyId: 2, subPicture: "./image/sub_tennis.png", createdAt: now, updatedAt: now},
+      {hobbyId: 3, subPicture: "./image/sub_camp.png", createdAt: now, updatedAt: now},
+      {hobbyId: 4, subPicture: "./image/sub_soba.png", createdAt: now, updatedAt: now},
+      {hobbyId: 5, subPicture: "./image/sub_jan.png", createdAt: now, updatedAt: now},
+      {hobbyId: 6, subPicture: "./image/sub_dirive.png", createdAt: now, updatedAt: now},
     ], {});
   },
 

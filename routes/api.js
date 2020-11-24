@@ -3,30 +3,19 @@ const router = express.Router();
 const apiController = require('../controllers/api');
 
 router.get('/hobby', apiController.getAllHobbies);
-// (req, res) => {
-  // Hobby.findAll().then(hobbies => {
-  //   res.send(hobbies);
-  // });
-// });
 
-// router.get('/api/hobby/:id', function(req, res, next) {
-//   Hobby.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(hobbies => {
-//     res.send(hobbies);
-//   });
-// });
+router.get('/hobby/:id', apiController.getHobby);
 
-// router.get('/api/hobby/:id/comment', function(req, res, next) {
-//   Comment.findAll({
-//     where: {
-//       id : req.params.id
-//     }
-//   }).then(comment => {
-//     res.send(comment);
-//   });
-// });
+router.get('/hobby/:id/comment', apiController.getAllComments);
+
+router.post('/hobby/:id/comment', apiController.postComment);
+
+router.put('/comment/:id', apiController.putComment);
+
+router.delete('/comment/:id', apiController.deleteComment);
+
+router.get('/user', apiController.getUser);
+
+router.post('/user', apiController.postUser);
 
 module.exports = router;
