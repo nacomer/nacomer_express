@@ -8,11 +8,14 @@ exports.getUser = async function (req, res) {
     if (user !== null) {
       const payload = {
         userId: user.id,
+        name: user.name,
       };
       const token = jwt.sign(payload, config.jwt.secret, config.jwt.options);
       return res.status(200).json({
         isSuccess: true,
         token: token,
+        userId: user.id,
+        name: user.name,
       });
     } else {
       return res.status(404).json({
@@ -29,6 +32,17 @@ exports.postUser = async function (req, res) {
   try {
     const user = await usersService.postUser(req.body);
     return res.status(201).json(user.id);
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
+
+exports.getLoginUser = async function (req, res) {
+  try {
+    return res.status(200).json({
+      userId: req.decoded.userId,
+      name: req.decoded.name,
+    });
   } catch (e) {
     return res.status(400).json({ status: 400, message: e.message });
   }
