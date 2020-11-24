@@ -46,5 +46,11 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: migrate
+          command: yarn migrate
+      - run:
+          name: seed
+          command: yarn seed
+      - run:
           name: test
           command: yarn test
