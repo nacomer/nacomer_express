@@ -29,10 +29,11 @@ exports.getAllComments = async function (req, res) {
 
 exports.postComment = async function (req, res) {
   try {
+    console.info("---------" + req.decoded);
     const comment = await hobbyService.postComment(
       req.params.id,
       req.body.content,
-      req.body.nacomerUserId
+      req.decoded.userId
     );
     return res.status(201).json({ id: comment.id, content: comment.content });
   } catch (e) {

@@ -21,7 +21,7 @@ describe("Hobby Api Server", () => {
   let TEST_COMMENT_ID;
 
   beforeEach(async () => {
-    request = chai.request(server);
+    request = chai.request(server).keepOpen();
 
     const comment = await Comment.create({
       hobbyId: 1,
@@ -38,6 +38,8 @@ describe("Hobby Api Server", () => {
         content: "TEST COMMENT",
       },
     });
+
+    request.close();
   });
 
   it("get all hobbies", async () => {
@@ -149,6 +151,13 @@ describe("Hobby Api Server", () => {
 
   it("post comments", async () => {
     //Setup
+    const testUser = {
+      name: "AAA",
+      password: "AAA",
+    };
+    const testLogin = await request.post("/api/user/login").send(testUser);
+    assert.equal(testLogin.body.isSuccess, true);
+
     const expect = "ゴルフ場は埼玉が安くてよい";
     const postComment = {
       hobbyId: 1,
@@ -156,8 +165,12 @@ describe("Hobby Api Server", () => {
       nacomerUserId: 1,
     };
 
-    //Exercise
-    const res = await request.post("/api/hobby/1/comment").send(postComment);
+    // Exercise
+    const auth = testLogin.body.token;
+    const res = await request
+      .post("/api/hobby/1/comment")
+      .set("Authorization", "Bearer " + auth)
+      .send(postComment);
 
     //Assert
     res.should.have.status(201);
