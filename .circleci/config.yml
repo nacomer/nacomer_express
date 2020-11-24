@@ -22,6 +22,16 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.16.3
+        environment:
+          DB_USER: postgres 
+          DB_PASSWORD: bado1213
+          DB_NAME: nacomer
+          DB_HOST: 127.0.0.1
+      - image: circleci/postgres:9.6.5-alpine-ram
+        environment:
+          POSTGRES_USER: postgres 
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: nacomer
     steps:
       - checkout
       - run:
@@ -38,4 +48,3 @@ jobs:
       - run:
           name: test
           command: yarn test
-          #command: echo "test"
