@@ -4,11 +4,20 @@ const Video = require("../models").Video;
 const SubPicture = require("../models").SubPicture;
 const Goods = require("../models").Goods;
 const NacomerUser = require("../models").NacomerUser;
+const Category = require("../models").Category;
 
 exports.getAllHobbies = async function () {
   const result = await Hobby.findAll({
     // raw: true,
-    attributes: ["id", "name", "mainPicture", "period"],
+    attributes: ["id", "name", "mainPicture", "period", "cost"],
+    include: [
+      {
+        model: Category,
+        as: "Categories",
+        required: false,
+        attributes: ["name"],
+      },
+    ],
   });
   return result;
 };
