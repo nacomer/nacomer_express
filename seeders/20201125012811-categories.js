@@ -28,6 +28,18 @@ module.exports = {
           updatedAt: now,
         },
         {
+          hobbyId: 1,
+          name: "老若男女",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          hobbyId: 1,
+          name: "2人以上",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
           hobbyId: 2,
           name: "アウトドア",
           createdAt: now,
@@ -40,6 +52,18 @@ module.exports = {
           updatedAt: now,
         },
         {
+          hobbyId: 2,
+          name: "2人以上",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          hobbyId: 2,
+          name: "老若男女",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
           hobbyId: 3,
           name: "アウトドア",
           createdAt: now,
@@ -48,6 +72,12 @@ module.exports = {
         {
           hobbyId: 3,
           name: "旅行",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          hobbyId: 3,
+          name: "1人から",
           createdAt: now,
           updatedAt: now,
         },
@@ -64,6 +94,12 @@ module.exports = {
           updatedAt: now,
         },
         {
+          hobbyId: 4,
+          name: "1人から",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
           hobbyId: 5,
           name: "インドア",
           createdAt: now,
@@ -72,6 +108,12 @@ module.exports = {
         {
           hobbyId: 5,
           name: "ギャンブル",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          hobbyId: 5,
+          name: "3人から",
           createdAt: now,
           updatedAt: now,
         },
@@ -88,14 +130,8 @@ module.exports = {
           updatedAt: now,
         },
         {
-          hobbyId: 7,
-          name: "インドア",
-          createdAt: now,
-          updatedAt: now,
-        },
-        {
-          hobbyId: 7,
-          name: "スポーツ",
+          hobbyId: 6,
+          name: "1人から",
           createdAt: now,
           updatedAt: now,
         },
