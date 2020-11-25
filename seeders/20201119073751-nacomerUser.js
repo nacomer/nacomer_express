@@ -17,9 +17,11 @@ module.exports = {
       "NacomerUsers",
       [
         { name: "AAA", password: "AAA", createdAt: now, updatedAt: now },
-        { name: "BBB", password: "BBB", createdAt: now, updatedAt: now },
-        { name: "CCC", password: "CCC", createdAt: now, updatedAt: now },
-        { name: "DDD", password: "DDD", createdAt: now, updatedAt: now },
+        { name: "netaro3", password: "BBB", createdAt: now, updatedAt: now },
+        { name: "kotaro", password: "CCC", createdAt: now, updatedAt: now },
+        { name: "momotaro", password: "DDD", createdAt: now, updatedAt: now },
+        { name: "kitaro", password: "EEE", createdAt: now, updatedAt: now },
+        { name: "kintaro", password: "FFF", createdAt: now, updatedAt: now },
       ],
       {}
     );
