@@ -1,243 +1,318 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const Hobby = require('../models').Hobby;
-const Comment = require('../models').Comment;
-const Video = require('../models').Video;
-const SubPicture = require('../models').SubPicture;
-const Goods = require('../models').Goods;
-const NacomerUser = require('../models').NacomerUser;
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const Hobby = require("../models").Hobby;
+const Comment = require("../models").Comment;
+const Video = require("../models").Video;
+const SubPicture = require("../models").SubPicture;
+const Goods = require("../models").Goods;
+const NacomerUser = require("../models").NacomerUser;
+const Category = require("../models").Category;
 const assert = chai.assert;
-const expect = chai.expect;
+// const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-const app = require('../app');
-const http = require('http');
+const app = require("../app");
+const http = require("http");
 chai.should();
 
 describe("Hobby Api Server", () => {
-    const server = http.createServer(app);
-    let request;
-    let TEST_COMMENT_ID;
+  const server = http.createServer(app);
+  let request;
+  let TEST_COMMENT_ID;
 
-    beforeEach( async () => {
-        request = chai.request(server);
+  beforeEach(async () => {
+    request = chai.request(server).keepOpen();
 
-        const comment = await Comment.create({
-            hobbyId: 1,
-            content: "TEST COMMENT"
-        });
-        TEST_COMMENT_ID = comment.id;
-        return comment;
+    const comment = await Comment.create({
+      hobbyId: 1,
+      content: "TEST COMMENT",
+      nacomerUserId: 1,
+    });
+    TEST_COMMENT_ID = comment.id;
+    return comment;
+  });
+
+  afterEach(async () => {
+    await Comment.destroy({
+      where: {
+        content: "TEST COMMENT",
+      },
     });
 
-    afterEach( async () => {
-        await Comment.destroy({
-            where: {
-                content: "TEST COMMENT"
-            }
-        });
+    request.close();
+  });
+
+  it("get all hobbies", async () => {
+    //Setup
+    const allHobbies = await Hobby.findAll({
+      raw: true,
+      attributes: ["id", "name", "mainPicture", "period", "cost"],
+      include: [
+        {
+          model: Category,
+          as: "Categories",
+          required: false,
+          attributes: ["name"],
+        },
+      ],
     });
 
-    it("get all hobbies", async () => {
-        //Setup
-        const allHobbies = await Hobby.findAll({
-            raw: true,
-            attributes: ['id', 'name', 'mainPicture', 'period']
-        });
+    //Exercise
+    const res = await request.get("/api/hobby");
 
-        //Exercise
-        const res = await request.get("/api/hobby");
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    // JSON.parse(res.text).should.deep.equal(allHobbies);
+    assert.equal(res.body[0].name, allHobbies[0].name);
+    assert.equal(res.body[0].cost, allHobbies[0].cost);
+    assert.equal(res.body[0][Category.name], allHobbies[0][Category.name]);
 
-        //Assert
-        res.should.have.status(200);
-        res.should.be.json;
-        JSON.parse(res.text).should.deep.equal(allHobbies);
+    //Teardown
+  });
 
-        //Teardown
+  it("get hobby", async () => {
+    //Setup
+    const specificHobby = await Hobby.findAll({
+      raw: true,
+      where: {
+        id: 1,
+      },
+      include: [
+        {
+          model: Comment,
+          as: "Comments",
+          required: false,
+          attributes: ["content"],
+        },
+        {
+          model: Goods,
+          as: "Goods",
+          required: false,
+          attributes: ["goodsName", "goodsPicture"],
+        },
+        {
+          model: SubPicture,
+          as: "SubPictures",
+          required: false,
+          attributes: ["subPicture", "description"],
+        },
+        {
+          model: Video,
+          as: "Videos",
+          required: false,
+          attributes: ["videoURL", "description"],
+        },
+      ],
     });
 
-    it("get hobby", async () => {
-        //Setup
-        const specificHobby = await Hobby.findAll({
-            raw: true,
-            where: {
-                id: 1
-            },
-            include: [
-                {
-                    model: Comment, as: 'Comments',
-                    required: false,
-                    attributes: ['content']
-                }, {
-                    model: Goods, as: 'Goods',
-                    required: false,
-                    attributes: ['goodsName', 'goodsPicture']
-                }, {
-                    model: SubPicture, as: 'SubPictures',
-                    required: false,
-                    attributes: ['subPicture']
-                }, {
-                    model: Video, as: 'Videos',
-                    required: false,
-                    attributes: ['videoURL']
-                }]
-        }
-        );
+    //Exercise
+    const res = await request.get("/api/hobby/1");
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    // JSON.parse(res.text).should.deep.equal(specificHobby);
+    assert.equal(
+      res.body[0][Goods.goodsName],
+      specificHobby[0][Goods.goodsName]
+    );
+    assert.equal(
+      res.body[0][Video.description],
+      specificHobby[0][Video.description]
+    );
+    assert.equal(
+      res.body[0][SubPicture.description],
+      specificHobby[0][SubPicture.description]
+    );
 
-        //Exercise
-        const res = await request.get("/api/hobby/1");
-        //Assert
-        res.should.have.status(200);
-        res.should.be.json;
-        // JSON.parse(res.text).should.deep.equal(specificHobby);
-        assert.equal(res.body[0][Goods.goodsName], specificHobby[0][Goods.goodsName]);
-        
-        //Teardown
+    //Teardown
+  });
+
+  it("get all comments", async () => {
+    //Setup
+    const allComments = await Comment.findAll({
+      raw: true,
+      where: {
+        hobbyId: 1,
+      },
+      attributes: ["content", "createdAt", "updatedAt"],
+      order: [
+        ["createdAt", "DESC"],
+        ["id", "ASC"],
+      ],
     });
 
-    it("get all comments", async () => {
-        //Setup
-        const allComments = await Comment.findAll({
-            raw: true,
-            where: {
-                hobbyId: 1
-            },
-            attributes: ['content','createdAt','updatedAt'],
-            order: [['createdAt', 'DESC']]
-        }
-        );
-
-        const mapExpectComments = allComments.map((data)=>{
-            return data.content;
-        })
-
-        //Exercise
-        const res = await request.get("/api/hobby/1/comment");
-        const mapActualComments = res.body.map((data)=>{
-            return data.content;
-        });
-
-        //Assert
-        res.should.have.status(200);
-        res.should.be.json;
-        mapActualComments.should.deep.equal(mapExpectComments);
-
-        //Teardown
+    const mapExpectComments = allComments.map((data) => {
+      return data.content;
     });
 
-    it("post comments", async () => {
-        //Setup
-        const expect = "ゴルフ場は埼玉が安くてよい";
-        const postComment = {
-            hobbyId:1,
-            content:"ゴルフ場は埼玉が安くてよい"
-        }
-
-        //Exercise
-        const res = await request.post("/api/hobby/1/comment").send(postComment);
-
-        //Assert
-        res.should.have.status(201);
-        res.should.be.json;
-        // JSON.parse(res.body.content).to.be.equal(postComment);
-        assert.equal(res.body.content, expect);
-
-        //Teardown
-        await Comment.destroy({
-            where: {
-                content: "ゴルフ場は埼玉が安くてよい"
-            }
-        });
+    //Exercise
+    const res = await request.get("/api/hobby/1/comment");
+    const mapActualComments = res.body.map((data) => {
+      return data.content;
     });
 
-    it("put comment", async () => {
-        //Setup
-        const expect = "ゴルフ場は実は千葉も良い";
-        const putComment = {
-            content: expect
-        }
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    mapActualComments.should.deep.equal(mapExpectComments);
 
-        //Exercise
-        const res = await request.put("/api/comment/"+ TEST_COMMENT_ID).send(putComment);
+    //Teardown
+  });
 
-        //Assert
-        res.should.have.status(200);
-        res.should.be.json;
-        // JSON.parse(res.body.content).to.be.equal(postComment);
-        assert.equal(res.body.content, expect);
+  it("post comments", async () => {
+    //Setup
+    const testUser = {
+      name: "AAA",
+      password: "AAA",
+    };
+    const testLogin = await request.post("/api/user/login").send(testUser);
+    assert.equal(testLogin.body.isSuccess, true);
 
-        //Teardown
-        await Comment.destroy({
-            where: {
-                content: expect
-            }
-        });
+    const expect = "ゴルフ場は埼玉が安くてよい";
+    const postComment = {
+      hobbyId: 1,
+      content: "ゴルフ場は埼玉が安くてよい",
+      nacomerUserId: 1,
+    };
+
+    // Exercise
+    const auth = testLogin.body.token;
+    const res = await request
+      .post("/api/hobby/1/comment")
+      .set("Authorization", "Bearer " + auth)
+      .send(postComment);
+
+    //Assert
+    res.should.have.status(201);
+    res.should.be.json;
+    // JSON.parse(res.body.content).to.be.equal(postComment);
+    assert.equal(res.body.content, expect);
+
+    //Teardown
+    await Comment.destroy({
+      where: {
+        content: "ゴルフ場は埼玉が安くてよい",
+      },
     });
+  });
 
-    it("delete comments", async () => {
-        //Setup
+  it("put comment", async () => {
+    //Setup
+    const expect = "ゴルフ場は実は千葉も良い";
+    const putComment = {
+      content: expect,
+    };
 
-        //Exercise
-        const res = await request.delete("/api/comment/"+ TEST_COMMENT_ID);
+    //Exercise
+    const res = await request
+      .put("/api/comment/" + TEST_COMMENT_ID)
+      .send(putComment);
 
-        //Assert
-        res.should.have.status(204);
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    // JSON.parse(res.body.content).to.be.equal(postComment);
+    assert.equal(res.body.content, expect);
 
-        //Teardown
+    //Teardown
+    await Comment.destroy({
+      where: {
+        content: expect,
+      },
     });
+  });
 
-    it("get User", async () => {
-        //Setup
-        const user = await NacomerUser.findAll({
-            raw: true,
-            where: {
-                name:"AAA",
-                password:"AAA"
-            },
-            attributes: ['id','name']
-        }
-        );
+  it("delete comments", async () => {
+    //Setup
 
-        user[0]["Auth"]="true";
+    //Exercise
+    const res = await request.delete("/api/comment/" + TEST_COMMENT_ID);
 
-        const tempUser={
-            name:"AAA",
-            password:"AAA"
-        };
+    //Assert
+    res.should.have.status(204);
 
-        //Exercise
-        const res = await request.get("/api/user").send(tempUser);
+    //Teardown
+  });
 
-        //Assert
-        res.should.have.status(200);
-        res.should.be.json;
-        JSON.parse(res.text).should.deep.equal(user);
+  it("get User, login", async () => {
+    //Setup
+    // const user = await NacomerUser.findOne({
+    //   raw: true,
+    //   where: {
+    //     name: "AAA",
+    //     password: "AAA",
+    //   },
+    //   attributes: ["id", "name"],
+    // });
 
-        //Teardown
+    // user["Auth"] = "true";
+
+    const tempUser = {
+      name: "AAA",
+      password: "AAA",
+    };
+
+    //Exercise
+    const res = await request.post("/api/user/login").send(tempUser);
+
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    console.log(res.body);
+    assert.equal(res.body.isSuccess, true);
+
+    //Teardown
+  });
+
+  it("post user, signup", async () => {
+    //Setup
+    const postUser = {
+      name: "TEST",
+      password: "TEST",
+    };
+
+    //Exercise
+    const res = await request.post("/api/user/register").send(postUser);
+
+    //Assert
+    res.should.have.status(201);
+    res.should.be.json;
+
+    //Teardown
+    await NacomerUser.destroy({
+      where: {
+        name: "TEST",
+      },
     });
+  });
 
-    it("post user", async () => {
-        //Setup
-        const postUser = {
-            name:"TEST",
-            password:"TEST"
-        }
+  it("get User", async () => {
+    //Setup
+    const testUser = {
+      name: "AAA",
+      password: "AAA",
+    };
+    const testLogin = await request.post("/api/user/login").send(testUser);
+    assert.equal(testLogin.body.isSuccess, true);
 
-        //Exercise
-        const res = await request.post("/api/user").send(postUser);
+    const expect = {
+      userId: 1,
+      name: "AAA",
+    };
 
-        //Assert
-        res.should.have.status(201);
-        res.should.be.json;
+    // Exercise
+    const auth = testLogin.body.token;
+    const res = await request
+      .get("/api/user/login")
+      .set("Authorization", "Bearer " + auth);
 
-        //Teardown
-        await NacomerUser.destroy({
-            where: {
-                name: "TEST"
-            }
-        });
-    });
+    //Assert
+    res.should.have.status(200);
+    res.should.be.json;
+    JSON.parse(res.text).should.deep.equal(expect);
 
-
+    //Teardown
+  });
 });

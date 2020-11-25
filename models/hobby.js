@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Hobby extends Model {
     /**
@@ -12,32 +10,39 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Hobby.hasMany(models.Comment, {
-        foreignKey: 'hobbyId',
-        as: 'Comments',
+        foreignKey: "hobbyId",
+        as: "Comments",
+      });
+      Hobby.hasMany(models.Category, {
+        foreignKey: "hobbyId",
+        as: "Categories",
       });
       Hobby.hasMany(models.Goods, {
-        foreignKey: 'hobbyId',
-        as: 'Goods',
+        foreignKey: "hobbyId",
+        as: "Goods",
       });
       Hobby.hasMany(models.Video, {
-        foreignKey: 'hobbyId',
-        as: 'Videos',
+        foreignKey: "hobbyId",
+        as: "Videos",
       });
       Hobby.hasMany(models.SubPicture, {
-        foreignKey: 'hobbyId',
-        as: 'SubPictures',
+        foreignKey: "hobbyId",
+        as: "SubPictures",
       });
     }
-  };
-  Hobby.init({
-    name: DataTypes.STRING,
-    mainPicture: DataTypes.STRING,
-    description: DataTypes.STRING,
-    cost: DataTypes.INTEGER,
-    period: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Hobby',
-  });
+  }
+  Hobby.init(
+    {
+      name: DataTypes.STRING,
+      mainPicture: DataTypes.STRING,
+      description: DataTypes.STRING,
+      cost: DataTypes.INTEGER,
+      period: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Hobby",
+    }
+  );
   return Hobby;
 };
