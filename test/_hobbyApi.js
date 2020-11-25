@@ -6,6 +6,7 @@ const Video = require("../models").Video;
 const SubPicture = require("../models").SubPicture;
 const Goods = require("../models").Goods;
 const NacomerUser = require("../models").NacomerUser;
+const Category = require("../models").Category;
 const assert = chai.assert;
 // const expect = chai.expect;
 
@@ -46,7 +47,15 @@ describe("Hobby Api Server", () => {
     //Setup
     const allHobbies = await Hobby.findAll({
       raw: true,
-      attributes: ["id", "name", "mainPicture", "period"],
+      attributes: ["id", "name", "mainPicture", "period", "cost"],
+      include: [
+        {
+          model: Category,
+          as: "Categories",
+          required: false,
+          attributes: ["name"],
+        },
+      ],
     });
 
     //Exercise
@@ -55,7 +64,10 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    JSON.parse(res.text).should.deep.equal(allHobbies);
+    // JSON.parse(res.text).should.deep.equal(allHobbies);
+    assert.equal(res.body[0].name, allHobbies[0].name);
+    assert.equal(res.body[0].cost, allHobbies[0].cost);
+    assert.equal(res.body[0][Category.name], allHobbies[0][Category.name]);
 
     //Teardown
   });

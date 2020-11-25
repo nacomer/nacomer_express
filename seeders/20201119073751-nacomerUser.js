@@ -19,6 +19,7 @@ module.exports = {
         { name: "AAA", password: "AAA", createdAt: now, updatedAt: now },
         { name: "BBB", password: "BBB", createdAt: now, updatedAt: now },
         { name: "CCC", password: "CCC", createdAt: now, updatedAt: now },
+        { name: "DDD", password: "DDD", createdAt: now, updatedAt: now },
       ],
       {}
     );
