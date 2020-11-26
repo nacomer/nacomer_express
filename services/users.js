@@ -1,21 +1,20 @@
 const NacomerUser = require("../models").NacomerUser;
 
-exports.getUser = async function (reqName, reqPassword) {
-  const result = await NacomerUser.findOne({
+exports.getUser = async function (reqGoogleId) {
+  const result = await NacomerUser.findAll({
     raw: true,
     where: {
-      name: reqName,
-      password: reqPassword,
+      googleId: reqGoogleId,
     },
-    attributes: ["id", "name"],
   });
   return result;
 };
 
-exports.postUser = async function (req) {
+exports.postUser = async function (reqGoogleId, reqUserName, reqPicture) {
   const user = await NacomerUser.create({
-    name: req.name,
-    password: req.password,
+    googleId: reqGoogleId,
+    name: reqUserName,
+    picture: reqPicture,
   });
   return user;
 };
