@@ -1,6 +1,6 @@
 version: 2.1 
 orbs:
-  aws-ecr: circleci/aws-ecr@0.0.10
+  aws-ecr: circleci/aws-ecr@6.14.0
 workflows:
   build-and-deploy:
     jobs:
