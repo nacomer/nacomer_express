@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ["package.json", "yarn.lock", "./"]
 
-RUN yarn install
+RUN yarn --frozen-lockfile
 COPY . .
 
 ENTRYPOINT [ "yarn", "start" ]
