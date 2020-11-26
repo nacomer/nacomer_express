@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   NacomerUser.init(
     {
       name: DataTypes.STRING,
-      password: DataTypes.STRING,
+      picture: DataTypes.STRING,
+      googleId: DataTypes.STRING,
     },
     {
       sequelize,

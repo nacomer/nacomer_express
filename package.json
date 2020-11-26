@@ -11,6 +11,7 @@
     "rollback": "sequelize-cli db:migrate:undo:all",
     "generate-seeds": "sequelize-cli seed:generate",
     "seed": "sequelize-cli db:seed:all",
+    "undoseed": "sequelize-cli db:seed:undo:all",
     "userfile": "sequelize model:generate --name NacomerUser --attributes name:string,password:string",
     "lint": "eslint --fix --ext .js .",
     "prettier": "prettier --write ./*/*.js",
