@@ -25,7 +25,8 @@ workflows:
           aws-region: ${AWS_DEFAULT_REGION}
           family: "${AWS_RESOURCE_NAME_PREFIX}-service"
           cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
-          container-image-name-updates: "tag=${CIRCLE_SHA1}"
+          service-name: "{$AWS_RESOURCE_NAME_PREFIX}-service"
+          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
     
 jobs:
   build:
@@ -51,7 +52,7 @@ jobs:
           command: "sudo npm install -g npm@latest"
       - run:
           name: install-yarn
-          command: yarn
+          command: yarn --frozen-lockfile
           paths:
             - ./node_modules
       - run:
