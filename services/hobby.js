@@ -68,7 +68,7 @@ exports.getAllComments = async function (reqHobbyId) {
         model: NacomerUser,
         as: "NacomerUser",
         required: false,
-        attributes: ["id", "name", "picture"],
+        attributes: ["id", "googleId", "name", "picture"],
       },
     ],
     order: [

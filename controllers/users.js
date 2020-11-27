@@ -4,10 +4,14 @@ const usersService = require("../services/users");
 
 exports.postUser = async function (req, res) {
   try {
+    console.log("test1");
+    console.log(req.body);
     const user = await usersService.getUser(req.body.googleId);
+    console.log("test2");
     if (user.length !== 0) {
       res.status(200).end();
     } else {
+      console.log(user);
       await usersService
         .postUser(req.body.googleId, req.body.userName, req.body.picture)
         .then(() => {

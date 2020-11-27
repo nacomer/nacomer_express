@@ -5,7 +5,7 @@ const Comment = require("../models").Comment;
 const Video = require("../models").Video;
 const SubPicture = require("../models").SubPicture;
 const Goods = require("../models").Goods;
-// const NacomerUser = require("../models").NacomerUser;
+const NacomerUser = require("../models").NacomerUser;
 const Category = require("../models").Category;
 const assert = chai.assert;
 // const expect = chai.expect;
@@ -131,16 +131,42 @@ describe("Hobby Api Server", () => {
 
   it("get all comments", async () => {
     //Setup
+    const reqHobbyId = 1;
     const allComments = await Comment.findAll({
       raw: true,
       where: {
-        hobbyId: 1,
+        hobbyId: reqHobbyId,
       },
-      attributes: ["content", "createdAt", "updatedAt"],
+      include: [
+        {
+          model: NacomerUser,
+          as: "NacomerUser",
+          required: false,
+          attributes: ["id", "googleId", "name", "picture"],
+        },
+      ],
       order: [
         ["createdAt", "DESC"],
         ["id", "ASC"],
       ],
+      attributes: ["id", "content", "createdAt", "updatedAt"],
+    });
+
+    const expectComments = allComments.map((comment) => {
+      const expectUser = {
+        id: comment["NacomerUser.id"],
+        googleId: comment["NacomerUser.googleId"],
+        name: comment["NacomerUser.name"],
+        picture: comment["NacomerUser.picture"],
+      };
+      const expectData = {
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt.toJSON(),
+        updatedAt: comment.updatedAt.toJSON(),
+        NacomerUser: expectUser,
+      };
+      return expectData;
     });
 
     const mapExpectComments = allComments.map((data) => {
@@ -152,12 +178,13 @@ describe("Hobby Api Server", () => {
     const mapActualComments = res.body.map((data) => {
       return data.content;
     });
+    console.log(expectComments);
 
     //Assert
     res.should.have.status(200);
     res.should.be.json;
     mapActualComments.should.deep.equal(mapExpectComments);
-
+    res.body.should.deep.equal(expectComments);
     //Teardown
   });
 

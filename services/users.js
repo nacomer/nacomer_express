@@ -7,6 +7,7 @@ exports.getUser = async function (reqGoogleId) {
       googleId: reqGoogleId,
     },
   });
+  console.log(result);
   return result;
 };
 
