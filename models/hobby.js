@@ -29,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "hobbyId",
         as: "SubPictures",
       });
-      Hobby.belongsTo(models.Personality, {//
-        foreignKey: "hobbyId",
-        onDelete: "CASCADE",
-      });
+      // Hobby.belongsTo(models.Personality, {//
+      //   foreignKey: "hobbyId",
+      //   onDelete: "CASCADE",
+      // });
     }
   }
   Hobby.init(
