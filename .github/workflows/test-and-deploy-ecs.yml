@@ -75,6 +75,21 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+    - name: Render Amazon ECS task definition # ECSタスク定義ファイルレンダリング
+      id: render-container
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: aws/task-definition.json # レポジトリ以下のタスク定義ファイルがあるPath
+        container-name: nacomer-api-service
+        image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}
+
+    - name: Deploy to Amazon ECS service # ECSサービスデプロイ
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.render-container.outputs.task-definition }}
+        service: nacomer-api-service
+        cluster: nacomer-api-cluster
+
     - name: Save docker image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -90,17 +105,3 @@ jobs:
         name: nacomer_api_image
         path: nacomer_api.tar
 
-    - name: Render Amazon ECS task definition # ECSタスク定義ファイルレンダリング
-      id: render-container
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: aws/task-definition.json # レポジトリ以下のタスク定義ファイルがあるPath
-        container-name: nacomer-api-service
-        image: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.AWS_ECR_REPO_NAME }}:${{ github.sha }}
-
-    - name: Deploy to Amazon ECS service # ECSサービスデプロイ
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.render-container.outputs.task-definition }}
-        service: nacomer-api-service
-        cluster: nacomer-api-cluster
