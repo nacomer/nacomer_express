@@ -1,6 +1,7 @@
 version: 2.1 
 orbs:
-  aws-ecr: circleci/aws-ecr@0.0.10
+  aws-ecr: circleci/aws-ecr@6.14.0
+  aws-ecs: circleci/aws-ecs@1.4.0
 workflows:
   build-and-deploy:
     jobs:
@@ -8,16 +9,25 @@ workflows:
           filters:
             tags:
               only: /v.*/
-      - aws-ecr/build_and_push_image:
+      - aws-ecr/build-and-push-image:
           filters:
             tags:
               only: /v.*/
             branches:
               only: main
           account-url: ACCOUNT_URL
-          repo: nacomer-express
+          repo: "${AWS_RESOURCE_NAME_PREFIX}"
           region: AWS_DEFAULT_REGION
           tag: "${CIRCLE_SHA1}"
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          aws-region: ${AWS_DEFAULT_REGION}
+          family: "${AWS_RESOURCE_NAME_PREFIX}-service"
+          cluster-name: "${AWS_RESOURCE_NAME_PREFIX}-cluster"
+          service-name: "{$AWS_RESOURCE_NAME_PREFIX}-service"
+          container-image-name-updates: "container=${AWS_RESOURCE_NAME_PREFIX}-service,tag=${CIRCLE_SHA1}"
+    
 jobs:
   build:
     docker:
@@ -42,7 +52,7 @@ jobs:
           command: "sudo npm install -g npm@latest"
       - run:
           name: install-yarn
-          command: yarn
+          command: yarn --frozen-lockfile
           paths:
             - ./node_modules
       - run:

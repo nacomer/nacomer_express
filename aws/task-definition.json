@@ -1,0 +1,111 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::988773502035:role/nacomer-api-ecs-execution-role",
+    "containerDefinitions": [
+      {
+        "dnsSearchDomains": [],
+        "environmentFiles": [],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "secretOptions": null,
+            "options": {
+              "awslogs-group": "/ecs/nacomer-api-service",
+              "awslogs-region": "ap-northeast-1",
+              "awslogs-stream-prefix": "ecs"
+            }
+          },
+        "entryPoint": [],
+        "portMappings": [
+          {
+            "hostPort": 80,
+            "protocol": "tcp",
+            "containerPort": 80
+          }
+        ],
+        "command": [],
+        "linuxParameters": null,
+        "cpu": 0,
+        "environment": [
+          {
+            "name": "BUILD_DATE",
+            "value": "-"
+          },
+          {
+            "name": "VERSION_INFO",
+            "value": "v0"
+          }
+        ],
+        "resourceRequirements": null,
+        "ulimits": [],
+        "dnsServers": [],
+        "mountPoints": [],
+        "workingDirectory": null,
+        "secrets": [
+            {
+              "valueFrom": "nacomer_db_host",
+              "name": "DB_HOST"
+            },
+            {
+              "valueFrom": "nacomer_db_name",
+              "name": "DB_NAME"
+            },
+            {
+              "valueFrom": "nacomer_db_password",
+              "name": "DB_PASSWORD"
+            },
+            {
+              "valueFrom": "nacomer_db_user",
+              "name": "DB_USER"
+            },
+            {
+              "valueFrom": "nacomer_api_jwt_key",
+              "name": "JWT_KEY"
+            },
+            {
+              "valueFrom": "nacomer_node_env",
+              "name": "NODE_ENV"
+            },
+            {
+              "valueFrom": "nacomer_api_port",
+              "name": "PORT"
+            }
+          ],
+        "dockerSecurityOptions": [],
+        "memory": null,
+        "memoryReservation": null,
+        "volumesFrom": [],
+        "stopTimeout": null,
+        "image": "nginx:0a1e1843aa5ebabe31f81bf979b0f15637ded739",
+        "startTimeout": null,
+        "firelensConfiguration": null,
+        "dependsOn": null,
+        "disableNetworking": null,
+        "interactive": null,
+        "healthCheck": null,
+        "essential": true,
+        "links": [],
+        "hostname": null,
+        "extraHosts": [],
+        "pseudoTerminal": null,
+        "user": null,
+        "readonlyRootFilesystem": null,
+        "dockerLabels": {},
+        "systemControls": [],
+        "privileged": null,
+        "name": "nacomer-api-service"
+      }
+    ],
+    "placementConstraints": [],
+    "memory": "1024",
+    "taskRoleArn": null,
+    "family": "nacomer-api-service",
+    "pidMode": null,
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": []
+  }

@@ -1,0 +1,17 @@
+{
+  "appenders": {
+    "ConsoleLogAppender": {
+      "type": "console"
+    }
+  },
+  "categories": {
+    "default": {
+      "appenders": ["ConsoleLogAppender"],
+      "level": "all"
+    },
+    "console": {
+      "appenders": ["ConsoleLogAppender"],
+      "level": "all"
+    }
+  }
+}
