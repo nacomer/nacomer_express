@@ -4,6 +4,13 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const Log4js = require('log4js');
+const env = process.env.NODE_ENV || "development";
+const config = require(__dirname + "/config/config.js")[env];
+
+Log4js.configure('./config/log-config.json');
+const logger4js = Log4js.getLogger('console');
+logger4js.level = config.loglevel || "ERROR";
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -23,6 +30,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(function (req, res, next) {
+  logContent = {
+    method : req.method,
+    path : req.path,
+    requestHeader : req.headers,
+    requestQuery : req.query,
+    requestBody : req.body
+  }
+  logger4js.debug(logContent)
+  next()
+});
 
 app.use("/", indexRouter);
 // app.use('/users', usersRouter);
