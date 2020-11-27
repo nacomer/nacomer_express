@@ -6,16 +6,16 @@
     "start": "node -r dotenv/config ./bin/www",
     "dev": "nodemon -r dotenv/config ./bin/www",
     "sequelize": "sequelize",
-    "createdb": "sequelize db:create",
+    "create-db": "sequelize db:create",
+    "migrate": "sequelize-cli db:migrate",
     "rollback": "sequelize-cli db:migrate:undo:all",
     "generate-seeds": "sequelize-cli seed:generate",
     "userfile": "sequelize model:generate --name NacomerUser --attributes name:string,password:string",
+    "setup": "yarn migrate && yarn seed",
     "lint": "eslint --fix --ext .js .",
     "prettier": "prettier --write ./*/*.js",
     "test": "mocha test && yarn lint && yarn prettier",
-    "seed": "yarn sequelize db:seed:undo:all && yarn sequelize db:seed:all",
-    "migrate": "yarn sequelize db:migrate:undo:all && yarn sequelize db:migrate",
-    "setup": "yarn migrate && yarn seed"
+    "test-only": "mocha test"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -32,15 +32,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(function (req, res, next) {
-  logContent = {
-    method: req.method,
-    path: req.path,
-    requestHeader: req.headers,
-    requestQuery: req.query,
-    requestBody: req.body,
-  };
-  logger4js.debug(logContent);
-  next();
+  const logContent = {
+    method : req.method,
+    path : req.path,
+    requestHeader : req.headers,
+    requestQuery : req.query,
+    requestBody : req.body
+  }
+  logger4js.debug(logContent)
+  next()
 });
 
 app.use("/", indexRouter);
