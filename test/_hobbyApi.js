@@ -8,7 +8,6 @@ const Goods = require("../models").Goods;
 const NacomerUser = require("../models").NacomerUser;
 const Category = require("../models").Category;
 const assert = chai.assert;
-// const expect = chai.expect;
 
 chai.use(chaiHttp);
 
@@ -64,7 +63,6 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    // JSON.parse(res.text).should.deep.equal(allHobbies);
     assert.equal(res.body[0].name, allHobbies[0].name);
     assert.equal(res.body[0].cost, allHobbies[0].cost);
     assert.equal(res.body[0][Category.name], allHobbies[0][Category.name]);
@@ -112,7 +110,6 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    // JSON.parse(res.text).should.deep.equal(specificHobby);
     assert.equal(
       res.body[0][Goods.goodsName],
       specificHobby[0][Goods.goodsName]
@@ -131,63 +128,74 @@ describe("Hobby Api Server", () => {
 
   it("get all comments", async () => {
     //Setup
+    const reqHobbyId = 1;
     const allComments = await Comment.findAll({
       raw: true,
       where: {
-        hobbyId: 1,
+        hobbyId: reqHobbyId,
       },
-      attributes: ["content", "createdAt", "updatedAt"],
+      include: [
+        {
+          model: NacomerUser,
+          as: "NacomerUser",
+          required: false,
+          attributes: ["id", "googleId", "name", "picture"],
+        },
+      ],
       order: [
         ["createdAt", "DESC"],
         ["id", "ASC"],
       ],
+      attributes: ["id", "content", "createdAt", "updatedAt"],
     });
 
-    const mapExpectComments = allComments.map((data) => {
-      return data.content;
+    const expectComments = allComments.map((comment) => {
+      const expectUser = {
+        id: comment["NacomerUser.id"],
+        googleId: comment["NacomerUser.googleId"],
+        name: comment["NacomerUser.name"],
+        picture: comment["NacomerUser.picture"],
+      };
+      const expectData = {
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt.toJSON(),
+        updatedAt: comment.updatedAt.toJSON(),
+        NacomerUser: expectUser,
+      };
+      return expectData;
     });
 
     //Exercise
     const res = await request.get("/api/hobby/1/comment");
-    const mapActualComments = res.body.map((data) => {
-      return data.content;
-    });
 
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    mapActualComments.should.deep.equal(mapExpectComments);
-
+    res.body.should.deep.equal(expectComments);
     //Teardown
   });
 
   it("post comments", async () => {
     //Setup
-    const testUser = {
-      name: "AAA",
-      password: "AAA",
-    };
-    const testLogin = await request.post("/api/user/login").send(testUser);
-    assert.equal(testLogin.body.isSuccess, true);
 
     const expect = "ゴルフ場は埼玉が安くてよい";
     const postComment = {
       hobbyId: 1,
       content: "ゴルフ場は埼玉が安くてよい",
-      nacomerUserId: 1,
     };
+    const googleId = "AAA";
 
     // Exercise
-    const auth = testLogin.body.token;
+    // const auth = testLogin.body.token;
     const res = await request
       .post("/api/hobby/1/comment")
-      .set("Authorization", "Bearer " + auth)
+      .set({ "x-googleid": googleId })
       .send(postComment);
 
     //Assert
     res.should.have.status(201);
     res.should.be.json;
-    // JSON.parse(res.body.content).to.be.equal(postComment);
     assert.equal(res.body.content, expect);
 
     //Teardown
@@ -213,7 +221,6 @@ describe("Hobby Api Server", () => {
     //Assert
     res.should.have.status(200);
     res.should.be.json;
-    // JSON.parse(res.body.content).to.be.equal(postComment);
     assert.equal(res.body.content, expect);
 
     //Teardown
@@ -236,83 +243,53 @@ describe("Hobby Api Server", () => {
     //Teardown
   });
 
-  it("get User, login", async () => {
+  it("User login(post:first login)", async () => {
     //Setup
-    // const user = await NacomerUser.findOne({
-    //   raw: true,
-    //   where: {
-    //     name: "AAA",
-    //     password: "AAA",
-    //   },
-    //   attributes: ["id", "name"],
-    // });
-
-    // user["Auth"] = "true";
 
     const tempUser = {
-      name: "AAA",
-      password: "AAA",
+      googleId: "testtesttest@gmail.com",
+      userName: "John Doe",
+      picture:
+        "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg",
     };
 
     //Exercise
     const res = await request.post("/api/user/login").send(tempUser);
 
     //Assert
-    res.should.have.status(200);
-    res.should.be.json;
-    console.log(res.body);
-    assert.equal(res.body.isSuccess, true);
+    res.should.have.status(201);
 
     //Teardown
+    const deleteUser = await NacomerUser.findOne({
+      where: {
+        googleId: tempUser.googleId,
+      },
+    });
+    await deleteUser.destroy();
   });
 
-  it("post user, signup", async () => {
-    //Setup
-    const postUser = {
-      name: "TEST",
-      password: "TEST",
+  it("User login(post:second login)", async () => {
+    const tempUser = {
+      googleId: "testJohnDoe@gmail.com",
+      userName: "John Doe the second",
+      picture:
+        "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg",
     };
 
     //Exercise
-    const res = await request.post("/api/user/register").send(postUser);
+    const firstRes = await request.post("/api/user/login").send(tempUser);
+    const secondRes = await request.post("/api/user/login").send(tempUser);
 
     //Assert
-    res.should.have.status(201);
-    res.should.be.json;
+    firstRes.should.have.status(201);
+    secondRes.should.have.status(200);
 
     //Teardown
-    await NacomerUser.destroy({
+    const deleteUser = await NacomerUser.findOne({
       where: {
-        name: "TEST",
+        googleId: tempUser.googleId,
       },
     });
-  });
-
-  it("get User", async () => {
-    //Setup
-    const testUser = {
-      name: "AAA",
-      password: "AAA",
-    };
-    const testLogin = await request.post("/api/user/login").send(testUser);
-    assert.equal(testLogin.body.isSuccess, true);
-
-    const expect = {
-      userId: 1,
-      name: "AAA",
-    };
-
-    // Exercise
-    const auth = testLogin.body.token;
-    const res = await request
-      .get("/api/user/login")
-      .set("Authorization", "Bearer " + auth);
-
-    //Assert
-    res.should.have.status(200);
-    res.should.be.json;
-    JSON.parse(res.text).should.deep.equal(expect);
-
-    //Teardown
+    await deleteUser.destroy();
   });
 });

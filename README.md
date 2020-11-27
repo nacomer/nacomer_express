@@ -33,9 +33,7 @@ This was created during my time as a student at [Code Chrysalis](https://codechr
 ## API lists
 |メソッド|エンドポイント|概要|
 |:----|:----|:-----|
-|POST|/api/user/register|ユーザー登録する|
-|POST|/api/user/login|ログインする（認証トークンを取得する）|
-|GET|/api/user/login|ログインする（認証トークンを用いてログインする）|
+|POST|/api/user/login|ログインする|
 |GET|/api/hobby/|登録されている趣味一覧を取得する|
 |GET|/api/hobby/`:id`|`:id`の趣味の詳細を取得する|
 |GET|/api/hobby/`:id`/comment|`:id`の趣味のコメント一覧を取得する|
@@ -45,7 +43,7 @@ This was created during my time as a student at [Code Chrysalis](https://codechr
 
 
 ## 💬 Usage
-## POST /api/user/register
+<!-- ## POST /api/user/register
 - ユーザー登録する
 - request body
     - name … ユーザー名を指定
@@ -62,31 +60,32 @@ This was created during my time as a student at [Code Chrysalis](https://codechr
 {
     id: 1
 }
-```
+``` -->
 
 ## POST /api/user/login
 - ログインする（認証トークンの取得）
 - request body
-    - name … ユーザー名を指定
-    - password … パスワードを設定
+    - googleId … GoogleのユーザーIdを指定
+    - userName … Googleのユーザーネームを設定
+    - picture … Googleのユーザー写真を設定
 ```
 {
-    name: "nacomer",
-    password: "password",
+  "googleId": "testtesttest@gmail.com",
+  "userName": "John Doe",
+  "picture": "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg"
 }
 ```
 - response
-    - isSuccess … ログイン結果（true / false）
-    - token … ログイン結果の認証トークンを取得（JWT形式） [isSuccess が false の場合]
-    - message … ログイン失敗のメッセージ [isSuccess が false の場合]
+    - status(200) … 既にユーザが存在した場合はHTTPステータスコード200を返します。
+    - status(201) … 	
+新規でユーザを作成した場合はHTTPステータスコード201を返します。
 ```
 {
-    isSuccess: true,
-    token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    status: 200/201,
 }
 ```
 
-## GET /api/user/login
+<!-- ## GET /api/user/login
 - ログインする（認証トークンを用いてログインする）
 - request header
     - Authorization: Bearer `token` … POST /api/user/login で取得したtokenを設定 
@@ -101,7 +100,7 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     userId: 1,
     name: "nacomer"
 }
-```
+``` -->
 ## GET /api/hobby/
 - 登録されている趣味一覧を取得する
 - response
@@ -220,6 +219,7 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         - NacomerUser … コメントのユーザー情報
             - id … ユーザーID
             - name … ユーザー名
+            - picture … ユーザーの写真
         - createAt … コメントの作成日
         - updateAt … コメントの更新日
 ```
@@ -230,7 +230,9 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   "updatedAt": "2020-11-25T02:36:21.873Z",
   "NacomerUser": {
     "id": 1,
+    "googleId": "AAA"
     "name": "AAA"
+    "picture": "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg"
   }
 },
 {
@@ -240,22 +242,24 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   "updatedAt": "2020-11-25T02:36:21.873Z",
   "NacomerUser": {
     "id": 2,
+    "googleId": "BBB"
     "name": "netaro3"
+    "picture": "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg"
   }
 }
 ```
 
 ## POST /api/hobby/`:id`/comment
 - `:id`の趣味にコメントを登録する
+- request header
+    - x-googleid: ユーザーのGoogleId情報を指定
 - request body
     - hobbyId: コメントを投稿する趣味IDを指定
     - content: コメント本文を指定
-    - nacomerUserId: コメントを投稿するユーザーIDを指定
 ```
 {
     hobbyId: 1,
     content: "楽しい趣味です",
-    nacomerUserId: 1
 }
 ```
 - response

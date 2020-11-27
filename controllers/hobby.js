@@ -1,4 +1,5 @@
 const hobbyService = require("../services/hobby");
+const usersService = require("../services/users");
 
 exports.getAllHobbies = async function (req, res) {
   try {
@@ -29,10 +30,12 @@ exports.getAllComments = async function (req, res) {
 
 exports.postComment = async function (req, res) {
   try {
+    const userId = await usersService.getUser(req.headers["x-googleid"]);
+
     const comment = await hobbyService.postComment(
       req.params.id,
       req.body.content,
-      req.decoded.userId
+      userId[0].id
     );
     return res.status(201).json({ id: comment.id, content: comment.content });
   } catch (e) {
