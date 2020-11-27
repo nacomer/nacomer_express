@@ -1,5 +1,6 @@
 # :two_men_holding_hands: nacomer_express 
-[![CircleCI](https://circleci.com/gh/nacomer/nacomer_express.png?circle-token=401a2a1929c5d7f585ff8e4847b2e6c8cbeff748)](https://circleci.com/gh/nacomer/nacomer_express.png?circle-token=401a2a1929c5d7f585ff8e4847b2e6c8cbeff748)
+![CI Test](https://github.com/nacomer/nacomer_express/workflows/CI%20Test/badge.svg)
+![AWS ECS deployment](https://github.com/nacomer/nacomer_express/workflows/AWS%20ECS%20deployment/badge.svg)
 
 This was created during my time as a student at [Code Chrysalis](https://codechrysalis.io/)
 
