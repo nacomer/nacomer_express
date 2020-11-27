@@ -5,7 +5,15 @@
       {
         "dnsSearchDomains": [],
         "environmentFiles": [],
-        "logConfiguration": null,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "secretOptions": null,
+            "options": {
+              "awslogs-group": "/ecs/nacomer-api-service",
+              "awslogs-region": "ap-northeast-1",
+              "awslogs-stream-prefix": "ecs"
+            }
+          },
         "entryPoint": [],
         "portMappings": [
           {
