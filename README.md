@@ -230,6 +230,7 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   "updatedAt": "2020-11-25T02:36:21.873Z",
   "NacomerUser": {
     "id": 1,
+    "googleId": "AAA"
     "name": "AAA"
     "picture": "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg"
   }
@@ -241,6 +242,7 @@ Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   "updatedAt": "2020-11-25T02:36:21.873Z",
   "NacomerUser": {
     "id": 2,
+    "googleId": "BBB"
     "name": "netaro3"
     "picture": "https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg"
   }
