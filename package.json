@@ -15,7 +15,8 @@
     "setup": "yarn migrate && yarn seed",
     "lint": "eslint --fix --ext .js .",
     "prettier": "prettier --write ./*/*.js",
-    "test": "mocha test && yarn lint && yarn prettier"
+    "test": "mocha test && yarn lint && yarn prettier",
+    "test-only": "mocha test"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
