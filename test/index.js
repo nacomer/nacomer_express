@@ -15,11 +15,11 @@ chai.use(chaiHttp);
 chai.should();
 // const expect = chai.expect;
 
-xdescribe("Threetter API Server", () => {
+describe("Nacomer API Server", () => {
   let request;
   let server;
   before(() => {
-    const port = "8080";
+    const port = "5000";
     app.set("port", port);
     server = http.createServer(app);
     server.listen(port);
@@ -36,61 +36,58 @@ xdescribe("Threetter API Server", () => {
     server.close();
   });
 
-  xit("GET /posts should return entire post list", async () => {
+  // ユーザが存在しない場合はユーザを作成し201を返す
+  it("POST /login should return 201 when specicying non-existence user", async () => {
     // setup
-    const endpoint = "/v1/threetter/posts";
-    const posts = await db.posts
-      .findAll({
-        raw: true,
-        order: [
-          ["date", "DESC"],
-          [db.tgts, "seq", "ASC"],
-        ],
-        include: [
-          {
-            model: db.users,
-            required: true,
-          },
-          {
-            model: db.tgts,
-            required: true,
-          },
-        ],
+    const deleteUserObj = {
+      googleId: "googleIdHogeHoge",
+    };
+    const endpoint = "/v1/login";
+    const target = "googleIdHogeHoge";
+    const sampleData = {
+      userName: "Taro Yamada",
+      picture:
+        "https://lh3.googleusercontent.com/a-/AOh14GgvPUM3JKBN6ndyP_Yx7I61v-8ArYIh8_D6QnLL=s96-c",
+    };
+    db.user
+      .destroy(deleteUserObj)
+      .then(async () => {
+        // execution
+        const res = await request
+          .post(endpoint)
+          .set({ "x-googleid": target })
+          .send(sampleData);
+        // assertion
+        res.should.have.status(201);
       })
-      .then((data) => {
-        const postsArray = [];
-        data.forEach((post) => {
-          const postsIndex = postsArray.findIndex((p) => p.id === post.id);
-          if (postsIndex === -1) {
-            const resPost = {
-              id: post.id,
-              date: post.date.toString(),
-              user: {
-                id: post["user.id"],
-                name: post["user.userName"],
-                picture: post["user.picture"],
-              },
-              tgts: {
-                id1: post["tgts.id"],
-                text1: post["tgts.tgt"],
-              },
-            };
-            postsArray.push(resPost);
-          } else if (!postsArray[postsIndex].tgts.id2) {
-            postsArray[postsIndex].tgts.id2 = post["tgts.id"];
-            postsArray[postsIndex].tgts.text2 = post["tgts.tgt"];
-          } else {
-            postsArray[postsIndex].tgts.id3 = post["tgts.id"];
-            postsArray[postsIndex].tgts.text3 = post["tgts.tgt"];
-          }
-        });
-        return postsArray;
+      .catch(async () => {
+        // execution
+        const res = await request
+          .post(endpoint)
+          .set({ "x-googleid": target })
+          .send(sampleData);
+        // assertion
+        res.should.have.status(201);
       });
-    // exercise
-    const res = await request.get(endpoint);
+  });
+
+  // ユーザが存在する場合はユーザを作成せず200を返す
+  it("POST /login should return 200 when specicying existence user", async () => {
+    // setup
+    const endpoint = "/v1/login";
+    const target = "googleIdHogeHoge";
+    const sampleData = {
+      userName: "Taro Yamada",
+      picture:
+        "https://lh3.googleusercontent.com/a-/AOh14GgvPUM3JKBN6ndyP_Yx7I61v-8ArYIh8_D6QnLL=s96-c",
+    };
+    await request.post(endpoint).set({ "x-googleid": target }).send(sampleData);
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set({ "x-googleid": target })
+      .send(sampleData);
     // assertion
     res.should.have.status(200);
-    res.should.be.json;
-    JSON.parse(JSON.stringify(res.body)).should.deep.equal(posts);
   });
 });
