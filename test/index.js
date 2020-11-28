@@ -156,4 +156,96 @@ describe("Nacomer API Server", () => {
     ];
     expected.should.deep.equal(actual);
   });
+
+  it("GET /events should return a specified events", async () => {
+    // setup
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズやります" },
+    });
+    const endpoint = "/v1/events/" + event1.id;
+    const expected = {
+      subject: "シャドウレイヤーズやります",
+      maxpart: 10,
+      minpart: 5,
+      place: "新宿ピカデリー",
+      description: "初心者歓迎です。",
+      properties: [
+        {
+          name: "急募",
+          category: "alarm",
+        },
+        {
+          name: "オープン",
+          category: "information",
+        },
+        {
+          name: "初心者歓迎",
+          category: "information",
+        },
+      ],
+      users: [
+        {
+          name: "山田一郎",
+          googleId: "hogegoogleid1",
+          picture: "https://hogehoge/1",
+        },
+        {
+          name: "山田三郎",
+          googleId: "hogegoogleid3",
+          picture: "https://hogehoge/3",
+        },
+        {
+          name: "山田四郎",
+          googleId: "hogegoogleid3",
+          picture: "https://hogehoge/3",
+        },
+      ],
+    };
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+
+    // assertion
+    const actual = {
+      subject: res.body.subject,
+      maxpart: res.body.maxpart,
+      minpart: res.body.minpart,
+      place: res.body.place,
+      description: res.body.description,
+      properties: [
+        {
+          name: res.body.properties[0].name,
+          category: res.body.properties[0].category,
+        },
+        {
+          name: res.body.properties[1].name,
+          category: res.body.properties[1].category,
+        },
+        {
+          name: res.body.properties[2].name,
+          category: res.body.properties[2].category,
+        },
+      ],
+      users: [
+        {
+          name: res.body.users[0].name,
+          googleId: res.body.users[0].googleId,
+          picture: res.body.users[0].picture,
+        },
+        {
+          name: res.body.users[1].name,
+          googleId: res.body.users[1].googleId,
+          picture: res.body.users[1].picture,
+        },
+        {
+          name: res.body.users[2].name,
+          googleId: res.body.users[2].googleId,
+          picture: res.body.users[2].picture,
+        },
+      ],
+    };
+    expected.should.deep.equal(actual);
+  });
 });

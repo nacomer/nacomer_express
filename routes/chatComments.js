@@ -52,7 +52,7 @@ router.post("/", (req, res) => {
       attributes: ["id"],
       where: {
         googleId: req.headers["x-googleid"],
-      }
+      },
     })
     .then((data) => {
       const userId = data.dataValues.id;
