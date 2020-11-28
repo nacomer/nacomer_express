@@ -268,4 +268,79 @@ describe("Nacomer API Server", () => {
     // assertion
     res.should.have.status(201);
   });
+
+  it("GET /hobbies should return a specified hobby", async () => {
+    // setup
+    const hobby1 = await db.hobby.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "シャドウレイヤーズ" },
+    });
+    const endpoint = "/v1/hobbies/" + hobby1.id;
+    const expected = [
+      {
+        // "id": "f037ae73-8efe-42ba-a2bd-20d425e18952",
+        name: "シャドウレイヤーズ",
+        picture: "https://hogehoge/1",
+        events: [
+          {
+            // "id": "12b0ddd1-e61b-4285-a84f-a6ab7121674d",
+            subject: "シャドウレイヤーズやります",
+            // "ownerId": "899d7173-e439-4028-a4bc-274c16d04458",
+            // "deadline": "2020-12-10T14:00:00.000Z",
+            // "start": "2020-12-17T10:00:00.000Z",
+            // "end": "2020-12-17T13:00:00.000Z",
+            maxpart: 10,
+            minpart: 5,
+            place: "新宿ピカデリー",
+            description: "初心者歓迎です。",
+            // "hobbyId": "f037ae73-8efe-42ba-a2bd-20d425e18952"
+          },
+          {
+            // "id": "d07e4158-19c2-4012-a5ce-2f10be1035dc",
+            subject: "シャドウレイヤーズすこ",
+            // "ownerId": "a7a966df-ccdd-444a-878c-ad7bd88c22c6",
+            // "deadline": "2020-12-05T14:00:00.000Z",
+            // "start": "2020-12-20T10:00:00.000Z",
+            // "end": "2020-12-20T13:00:00.000Z",
+            maxpart: 10,
+            minpart: 5,
+            place: "新宿ピカデリー",
+            description: "初心者の方も。",
+            // "hobbyId": "f037ae73-8efe-42ba-a2bd-20d425e18952"
+          },
+        ],
+      },
+    ];
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+
+    console.log(res.body.events);
+
+    // assertion
+    const actual = [
+      {
+        name: res.body.name,
+        picture: res.body.picture,
+        events: [
+          {
+            subject: res.body.events[0].subject,
+            maxpart: res.body.events[0].maxpart,
+            minpart: res.body.events[0].minpart,
+            place: res.body.events[0].place,
+            description: res.body.events[0].description,
+          },
+          {
+            subject: res.body.events[1].subject,
+            maxpart: res.body.events[1].maxpart,
+            minpart: res.body.events[1].minpart,
+            place: res.body.events[1].place,
+            description: res.body.events[1].description,
+          },
+        ],
+      },
+    ];
+    expected.should.deep.equal(actual);
+  });
 });

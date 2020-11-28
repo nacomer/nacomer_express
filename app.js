@@ -11,6 +11,7 @@ const loginRouter = require("./routes/login");
 const chatCommentsRouter = require("./routes/chatComments");
 const eventsRouter = require("./routes/events");
 const participantRouter = require("./routes/participant");
+const hobbyRouter = require("./routes/hobbies");
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use("/v1/login", loginRouter);
 app.use("/v1/chatComments", chatCommentsRouter);
 app.use("/v1/events", eventsRouter);
 app.use("/v1/participant", participantRouter);
+app.use("/v1/hobbies", hobbyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
