@@ -156,4 +156,113 @@ describe("Nacomer API Server", () => {
     ];
     expected.should.deep.equal(actual);
   });
+
+  it("GET /events should return all events", async () => {
+    // setup
+    const endpoint = "/v1/events";
+    const expected = [
+      {
+        subject: "シャドウレイヤーズやります",
+        deadline: "2020-12-10T14:00:00.000Z",
+        start: "2020-12-17T10:00:00.000Z",
+        end: "2020-12-17T13:00:00.000Z",
+        maxpart: 10,
+        minpart: 5,
+        place: "新宿ピカデリー",
+        description: "初心者歓迎です。",
+        properties: [
+          {
+            name: "急募",
+            category: "alarm",
+          },
+          {
+            name: "オープン",
+            category: "information",
+          },
+          {
+            name: "初心者歓迎",
+            category: "information",
+          },
+        ],
+        users: [
+          {
+            name: "山田四郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+          {
+            name: "山田三郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+          {
+            name: "山田一郎",
+            googleId: "hogegoogleid1",
+            picture: "https://hogehoge/1",
+          },
+        ],
+      },
+      {
+        subject: "シャドウレイヤーズすこ",
+        deadline: "2020-12-05T14:00:00.000Z",
+        start: "2020-12-20T10:00:00.000Z",
+        end: "2020-12-20T13:00:00.000Z",
+        maxpart: 10,
+        minpart: 5,
+        place: "新宿ピカデリー",
+        description: "初心者の方も。",
+        properties: [
+          {
+            name: "ゆる募",
+            category: "information",
+          },
+          {
+            name: "オープン",
+            category: "information",
+          },
+        ],
+        users: [
+          {
+            name: "山田四郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+          {
+            name: "山田三郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+          {
+            name: "山田二郎",
+            googleId: "hogegoogleid2",
+            picture: "https://hogehoge/2",
+          },
+        ],
+      },
+    ];
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+
+    // assertion
+    chai.assert.equal(res.body.length, 2);
+    delete res.body[0].id;
+    delete res.body[0].ownerId;
+    delete res.body[0].hobbyId;
+    delete res.body[0].properties[0].id;
+    delete res.body[0].properties[1].id;
+    delete res.body[0].properties[2].id;
+    delete res.body[0].users[0].id;
+    delete res.body[0].users[1].id;
+    delete res.body[0].users[2].id;
+    delete res.body[1].id;
+    delete res.body[1].ownerId;
+    delete res.body[1].hobbyId;
+    delete res.body[1].properties[0].id;
+    delete res.body[1].properties[1].id;
+    delete res.body[1].users[0].id;
+    delete res.body[1].users[1].id;
+    delete res.body[1].users[2].id;
+    expected.should.deep.equal(res.body);
+  });
 });

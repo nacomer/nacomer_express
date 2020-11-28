@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id",
         sourceKey: "userId",
       });
+      participant.belongsTo(models.event, {
+        foreignKey: "eventId",
+      });
     }
   }
   participant.init(
