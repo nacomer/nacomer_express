@@ -250,9 +250,6 @@ describe("Nacomer API Server", () => {
     const actual = [
       {
         subject: res.body[0].subject,
-        deadline: res.body[0].deadline,
-        start: res.body[0].start,
-        end: res.body[0].end,
         maxpart: res.body[0].maxpart,
         minpart: res.body[0].minpart,
         place: res.body[0].place,
@@ -291,9 +288,6 @@ describe("Nacomer API Server", () => {
       },
       {
         subject: res.body[1].subject,
-        deadline: res.body[1].deadline,
-        start: res.body[1].start,
-        end: res.body[1].end,
         maxpart: res.body[1].maxpart,
         minpart: res.body[1].minpart,
         place: res.body[1].place,
