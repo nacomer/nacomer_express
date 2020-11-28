@@ -1,5 +1,6 @@
 // testing framework
 require("mocha");
+const { expect } = require("chai");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
@@ -13,7 +14,6 @@ const db = require("../models/index");
 // chai
 chai.use(chaiHttp);
 chai.should();
-// const expect = chai.expect;
 
 describe("Nacomer API Server", () => {
   let request;
@@ -91,7 +91,6 @@ describe("Nacomer API Server", () => {
     res.should.have.status(200);
   });
 
-  // post投稿テスト
   it("POST /chatComments should register a chatComment", async () => {
     // setup
     const endpoint = "/v1/chatComments";
@@ -111,5 +110,50 @@ describe("Nacomer API Server", () => {
       .send(sampleData);
     // assertion
     res.should.have.status(201);
+  });
+
+  it("GET /chatComments should return chatComments", async () => {
+    // setup
+    const event1 = await db.chatComment.findOne({
+      raw: true,
+      attributes: ["eventId"],
+      where: { comment: "あと一人" },
+    });
+    const endpoint = "/v1/chatComments?eventId=" + event1.eventId;
+    const expected = [
+      {
+        comment: "あと一人",
+        name: "山田一郎",
+        googleId: "hogegoogleid1",
+        picture: "https://hogehoge/1",
+      },
+      {
+        comment: "よろ",
+        name: "山田三郎",
+        googleId: "hogegoogleid3",
+        picture: "https://hogehoge/3",
+      },
+    ];
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+
+    // assertion
+    chai.assert.equal(res.body.length, 2);
+    const actual = [
+      {
+        comment: res.body[0].comment,
+        name: res.body[0].user.name,
+        googleId: res.body[0].user.googleId,
+        picture: res.body[0].user.picture,
+      },
+      {
+        comment: res.body[1].comment,
+        name: res.body[1].user.name,
+        googleId: res.body[1].user.googleId,
+        picture: res.body[1].user.picture,
+      },
+    ];
+    expected.should.deep.equal(actual);
   });
 });
