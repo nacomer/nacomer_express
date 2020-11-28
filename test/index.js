@@ -133,13 +133,19 @@ describe("Nacomer API Server", () => {
         googleId: "hogegoogleid3",
         picture: "https://hogehoge/3",
       },
+      {
+        comment: "あいうえおコメントあいうえお",
+        name: "山田一郎",
+        googleId: "hogegoogleid1",
+        picture: "https://hogehoge/1",
+      },
     ];
 
     // execution
     const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
 
     // assertion
-    chai.assert.equal(res.body.length, 2);
+    chai.assert.equal(res.body.length, 3);
     const actual = [
       {
         comment: res.body[0].comment,
@@ -152,6 +158,12 @@ describe("Nacomer API Server", () => {
         name: res.body[1].user.name,
         googleId: res.body[1].user.googleId,
         picture: res.body[1].user.picture,
+      },
+      {
+        comment: res.body[2].comment,
+        name: res.body[2].user.name,
+        googleId: res.body[2].user.googleId,
+        picture: res.body[2].user.picture,
       },
     ];
     expected.should.deep.equal(actual);
@@ -315,8 +327,6 @@ describe("Nacomer API Server", () => {
 
     // execution
     const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
-
-    console.log(res.body.events);
 
     // assertion
     const actual = [

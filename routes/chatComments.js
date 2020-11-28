@@ -56,15 +56,25 @@ router.post("/", (req, res) => {
     })
     .then((data) => {
       const userId = data.dataValues.id;
-      const postObj = {
-        participantsId: userId,
-        eventId: req.body.eventId,
-        comment: req.body.comment,
-        date: new Date(),
-      };
-      db.chatComment.create(postObj).then(() => {
-        res.status(201).end();
-      });
+      db.participant
+        .findOne({
+          attributes: ["id"],
+          where: {
+            userId: userId,
+            eventId: req.body.eventId,
+          },
+        })
+        .then((data) => {
+          const postObj = {
+            participantId: data.dataValues.id,
+            eventId: req.body.eventId,
+            comment: req.body.comment,
+            date: new Date(),
+          };
+          db.chatComment.create(postObj).then(() => {
+            res.status(201).end();
+          });
+        });
     })
     .catch((e) => {
       logger4js.debug(e);
