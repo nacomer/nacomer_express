@@ -246,23 +246,87 @@ describe("Nacomer API Server", () => {
 
     // assertion
     chai.assert.equal(res.body.length, 2);
-    delete res.body[0].id;
-    delete res.body[0].ownerId;
-    delete res.body[0].hobbyId;
-    delete res.body[0].properties[0].id;
-    delete res.body[0].properties[1].id;
-    delete res.body[0].properties[2].id;
-    delete res.body[0].users[0].id;
-    delete res.body[0].users[1].id;
-    delete res.body[0].users[2].id;
-    delete res.body[1].id;
-    delete res.body[1].ownerId;
-    delete res.body[1].hobbyId;
-    delete res.body[1].properties[0].id;
-    delete res.body[1].properties[1].id;
-    delete res.body[1].users[0].id;
-    delete res.body[1].users[1].id;
-    delete res.body[1].users[2].id;
-    expected.should.deep.equal(res.body);
+
+    const actual = [
+      {
+        subject: res.body[0].subject,
+        deadline: res.body[0].deadline,
+        start: res.body[0].start,
+        end: res.body[0].end,
+        maxpart: res.body[0].maxpart,
+        minpart: res.body[0].minpart,
+        place: res.body[0].place,
+        description: res.body[0].description,
+        properties: [
+          {
+            name: res.body[0].properties[0].name,
+            category: res.body[0].properties[0].category,
+          },
+          {
+            name: res.body[0].properties[1].name,
+            category: res.body[0].properties[1].category,
+          },
+          {
+            name: res.body[0].properties[2].name,
+            category: res.body[0].properties[2].category,
+          },
+        ],
+        users: [
+          {
+            name: res.body[0].users[0].name,
+            googleId: res.body[0].users[0].googleId,
+            picture: res.body[0].users[0].picture,
+          },
+          {
+            name: res.body[0].users[1].name,
+            googleId: res.body[0].users[1].googleId,
+            picture: res.body[0].users[1].picture,
+          },
+          {
+            name: res.body[0].users[2].name,
+            googleId: res.body[0].users[2].googleId,
+            picture: res.body[0].users[2].picture,
+          },
+        ],
+      },
+      {
+        subject: res.body[1].subject,
+        deadline: res.body[1].deadline,
+        start: res.body[1].start,
+        end: res.body[1].end,
+        maxpart: res.body[1].maxpart,
+        minpart: res.body[1].minpart,
+        place: res.body[1].place,
+        description: res.body[1].description,
+        properties: [
+          {
+            name: res.body[1].properties[0].name,
+            category: res.body[1].properties[0].category,
+          },
+          {
+            name: res.body[1].properties[1].name,
+            category: res.body[1].properties[1].category,
+          },
+        ],
+        users: [
+          {
+            name: res.body[1].users[0].name,
+            googleId: res.body[1].users[0].googleId,
+            picture: res.body[1].users[0].picture,
+          },
+          {
+            name: res.body[1].users[1].name,
+            googleId: res.body[1].users[1].googleId,
+            picture: res.body[1].users[1].picture,
+          },
+          {
+            name: res.body[1].users[2].name,
+            googleId: res.body[1].users[2].googleId,
+            picture: res.body[1].users[2].picture,
+          },
+        ],
+      },
+    ];
+    expected.should.deep.equal(actual);
   });
 });
