@@ -1,7 +1,6 @@
-'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('participants', {
+  up: async (queryInterface, Sequelize) => queryInterface.sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    .then(() => queryInterface.createTable('participants', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -22,8 +21,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
-  },
+    }))
+  ,
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('participants');
   }
