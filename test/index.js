@@ -37,7 +37,7 @@ describe("Nacomer API Server", () => {
   });
 
   // ユーザが存在しない場合はユーザを作成し201を返す
-  it("POST /login should return 201 when specicying non-existence user", async () => {
+  xit("POST /login should return 201 when specicying non-existence user", async () => {
     // setup
     const deleteUserObj = {
       googleId: "googleIdHogeHoge",
@@ -72,7 +72,7 @@ describe("Nacomer API Server", () => {
   });
 
   // ユーザが存在する場合はユーザを作成せず200を返す
-  it("POST /login should return 200 when specicying existence user", async () => {
+  xit("POST /login should return 200 when specicying existence user", async () => {
     // setup
     const endpoint = "/v1/login";
     const target = "googleIdHogeHoge";
@@ -89,5 +89,27 @@ describe("Nacomer API Server", () => {
       .send(sampleData);
     // assertion
     res.should.have.status(200);
+  });
+
+  // post投稿テスト
+  it("POST /chatComments should register a chatComment", async () => {
+    // setup
+    const endpoint = "/v1/chatComments";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズやります" },
+    });
+    const sampleData = {
+      eventId: event1.id,
+      comment: "あいうえおコメントあいうえお",
+    };
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(201);
   });
 });
