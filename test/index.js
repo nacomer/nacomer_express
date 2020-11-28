@@ -37,7 +37,7 @@ describe("Nacomer API Server", () => {
   });
 
   // ユーザが存在しない場合はユーザを作成し201を返す
-  xit("POST /login should return 201 when specicying non-existence user", async () => {
+  it("POST /login should return 201 when specicying non-existence user", async () => {
     // setup
     const deleteUserObj = {
       googleId: "googleIdHogeHoge",
@@ -72,7 +72,7 @@ describe("Nacomer API Server", () => {
   });
 
   // ユーザが存在する場合はユーザを作成せず200を返す
-  xit("POST /login should return 200 when specicying existence user", async () => {
+  it("POST /login should return 200 when specicying existence user", async () => {
     // setup
     const endpoint = "/v1/login";
     const target = "googleIdHogeHoge";
