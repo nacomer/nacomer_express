@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
       } else {
         const userObj = {
           googleId: req.headers["x-googleid"],
-          userName: req.body.userName,
+          name: req.body.userName,
           picture: req.body.picture,
         };
         db.user.create(userObj).then(() => {
