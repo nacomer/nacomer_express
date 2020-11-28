@@ -163,9 +163,6 @@ describe("Nacomer API Server", () => {
     const expected = [
       {
         subject: "シャドウレイヤーズやります",
-        deadline: "2020-12-10T14:00:00.000Z",
-        start: "2020-12-17T10:00:00.000Z",
-        end: "2020-12-17T13:00:00.000Z",
         maxpart: 10,
         minpart: 5,
         place: "新宿ピカデリー",
@@ -204,9 +201,6 @@ describe("Nacomer API Server", () => {
       },
       {
         subject: "シャドウレイヤーズすこ",
-        deadline: "2020-12-05T14:00:00.000Z",
-        start: "2020-12-20T10:00:00.000Z",
-        end: "2020-12-20T13:00:00.000Z",
         maxpart: 10,
         minpart: 5,
         place: "新宿ピカデリー",
