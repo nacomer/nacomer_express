@@ -37,6 +37,9 @@ jobs:
     - name: Create Database
       run: yarn create-db
 
+    - name: Enable uuid_generate()
+      run: sh ./db/enable_uuid.sh postgres password postgres
+
     - name: Setup Database
       run: yarn setup
 
