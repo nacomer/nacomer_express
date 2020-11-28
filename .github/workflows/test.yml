@@ -38,7 +38,7 @@ jobs:
       run: yarn create-db
 
     - name: Enable uuid_generate()
-      run: sh ./db/enable_uuid.sh postgres password postgres
+      run: sh ./db/enable_uuid.sh postgres nacomer postgres
 
     - name: Setup Database
       run: yarn setup
