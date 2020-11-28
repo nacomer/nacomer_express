@@ -248,4 +248,24 @@ describe("Nacomer API Server", () => {
     };
     expected.should.deep.equal(actual);
   });
+
+  it("POST /participant should register a participant", async () => {
+    // setup
+    const endpoint = "/v1/participant";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズすこ" },
+    });
+    const sampleData = {
+      eventId: event1.id,
+    };
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(201);
+  });
 });

@@ -10,6 +10,7 @@ const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
 const chatCommentsRouter = require("./routes/chatComments");
 const eventsRouter = require("./routes/events");
+const participantRouter = require("./routes/participant");
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use("/", indexRouter);
 app.use("/v1/login", loginRouter);
 app.use("/v1/chatComments", chatCommentsRouter);
 app.use("/v1/events", eventsRouter);
+app.use("/v1/participant", participantRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
