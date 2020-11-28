@@ -4,22 +4,39 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const Log4js = require("log4js");
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/config/config.js")[env];
-
-Log4js.configure("./config/log-config.json");
-const logger4js = Log4js.getLogger("console");
-logger4js.level = config.loglevel || "ERROR";
-
+const fetch = require("node-fetch");
+const logger4js = require("./config/logger-init");
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const hobbyRouter = require("./routes/hobby");
-const commentRouter = require("./routes/comment");
+const loginRouter = require("./routes/login");
 
 const app = express();
 
 app.use(cors());
+
+// Authentication before api execution using Google OAuth2 API
+app.use(async (req, res, next) => {
+  if (process.env.NODE_ENV !== "production") {
+    next();
+    return;
+  }
+  let idToken;
+  if (req.headers["x-auth-token"]) {
+    idToken = req.headers["x-auth-token"];
+  } else {
+    next(createError(403));
+    return;
+  }
+  const validatePath = "https://oauth2.googleapis.com/tokeninfo?id_token=";
+  const path = validatePath + idToken;
+  const authRes = await fetch(path);
+  if (authRes.status === 200) {
+    // in case of authentication valid
+    next();
+  } else {
+    // in case of authentication invalid
+    next(createError(403));
+  }
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -44,10 +61,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/", indexRouter);
-// app.use('/users', usersRouter);
-app.use("/api/hobby", hobbyRouter);
-app.use("/api/comment", commentRouter);
-app.use("/api/user", usersRouter);
+app.use("/v1/login", loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
