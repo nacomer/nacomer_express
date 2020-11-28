@@ -11,7 +11,13 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "no-console": 0
-  },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"]
+    "no-console": 0,
+    "no-unused-expressions": "off",
+    "no-shadow":"off",
+    "no-unused-vars":"warn",
+    // "import/no-dynamic-require":"warn",
+    "global-require":"warn",
+    // "sequelize/create-indexes-concurrently":"error"
+},
+"extends": ["eslint:recommended", "plugin:prettier/recommended"]
 }

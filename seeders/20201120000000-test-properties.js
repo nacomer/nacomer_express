@@ -1,34 +1,34 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     const now = new Date();
-    return queryInterface.bulkInsert('properties', [
+    return queryInterface.bulkInsert("properties", [
       {
-        name:'急募',
-        category:'alarm',
+        name: "急募",
+        category: "alarm",
         createdAt: now,
-        updatedAt: now,        
+        updatedAt: now,
       },
       {
-        name:'ゆる募',
-        category:'information',
+        name: "ゆる募",
+        category: "information",
         createdAt: now,
-        updatedAt: now,        
+        updatedAt: now,
       },
       {
-        name:'オープン',
-        category:'information',
+        name: "オープン",
+        category: "information",
         createdAt: now,
-        updatedAt: now,        
+        updatedAt: now,
       },
       {
-        name:'初心者歓迎',
-        category:'information',
+        name: "初心者歓迎",
+        category: "information",
         createdAt: now,
-        updatedAt: now,        
+        updatedAt: now,
       },
     ]);
   },
 
-  down: async (queryInterface, Sequelize) => queryInterface.bulkDelete('properties', null, {}),
+  down: async (queryInterface) =>
+    queryInterface.bulkDelete("properties", null, {}),
 };
-
