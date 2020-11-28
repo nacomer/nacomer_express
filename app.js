@@ -8,6 +8,7 @@ const fetch = require("node-fetch");
 const logger4js = require("./config/logger-init");
 const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
+const chatCommentsRouter = require("./routes/chatComments");
 
 const app = express();
 
@@ -62,6 +63,7 @@ app.use(function (req, res, next) {
 
 app.use("/", indexRouter);
 app.use("/v1/login", loginRouter);
+app.use("/v1/chatComments", chatCommentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

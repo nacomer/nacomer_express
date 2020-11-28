@@ -90,4 +90,26 @@ describe("Nacomer API Server", () => {
     // assertion
     res.should.have.status(200);
   });
+
+  // post投稿テスト
+  it("POST /chatComments should register a chatComment", async () => {
+    // setup
+    const endpoint = "/v1/chatComments";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズやります" },
+    });
+    const sampleData = {
+      eventId: event1.id,
+      comment: "あいうえおコメントあいうえお",
+    };
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(201);
+  });
 });
