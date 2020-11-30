@@ -284,6 +284,26 @@ describe("Nacomer API Server", () => {
     res.should.have.status(201);
   });
 
+  it("POST /participant should response 409 if a user already applied", async () => {
+    // setup
+    const endpoint = "/v1/participant";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズすこ" },
+    });
+    const sampleData = {
+      eventId: event1.id,
+    };
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(409);
+  });
+
   it("DELETE /participant should delete a participant", async () => {
     // setup
     const endpoint = "/v1/participant";
@@ -390,5 +410,20 @@ describe("Nacomer API Server", () => {
       },
     ];
     expected.should.deep.equal(actual);
+  });
+
+  it("GET(test) /events should return all event id", async () => {
+    // setup
+    const endpoint = "/v1/events";
+    const events = await db.event.findAll({
+      raw: true,
+      attributes: ["id"],
+    });
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+    // assertion
+    res.should.have.status(200);
+    res.body.should.deep.equal(events);
   });
 });
