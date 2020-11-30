@@ -17,6 +17,11 @@ const app = express();
 
 app.use(cors());
 
+// HealthCheck before Authentication
+app.get("/health", (req, res) => {
+  res.status(200).end();
+});
+
 // Authentication before api execution using Google OAuth2 API
 app.use(async (req, res, next) => {
   if (process.env.NODE_ENV !== "production") {
