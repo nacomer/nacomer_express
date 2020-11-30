@@ -281,6 +281,26 @@ describe("Nacomer API Server", () => {
     res.should.have.status(201);
   });
 
+  it("POST /participant should response 409 if a user already applied", async () => {
+    // setup
+    const endpoint = "/v1/participant";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズすこ" },
+    });
+    const sampleData = {
+      eventId: event1.id,
+    };
+    // execution
+    const res = await request
+      .post(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(409);
+  });
+
   it("DELETE /participant should delete a participant", async () => {
     // setup
     const endpoint = "/v1/participant";
