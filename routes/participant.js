@@ -19,9 +19,20 @@ router.post("/", (req, res) => {
         userId: userId,
         eventId: req.body.eventId,
       };
-      db.participant.create(postObj).then(() => {
-        res.status(201).end();
-      });
+      db.participant
+        .findAll({
+          raw: true,
+          where: postObj,
+        })
+        .then((data) => {
+          if (data.length != 0) {
+            res.status(409).end();
+          } else {
+            db.participant.create(postObj).then(() => {
+              res.status(201).end();
+            });
+          }
+        });
     })
     .catch((e) => {
       logger4js.debug(e);
