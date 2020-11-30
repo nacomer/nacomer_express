@@ -281,6 +281,40 @@ describe("Nacomer API Server", () => {
     res.should.have.status(201);
   });
 
+  it("DELETE /participant should delete a participant", async () => {
+    // setup
+    const endpoint = "/v1/participant";
+    const event1 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "シャドウレイヤーズすこ" },
+    });
+    let before = await db.participant.findAll({
+      raw: true,
+      where: { eventId: event1.id },
+    });
+
+    const expect = before.length - 1;
+
+    const sampleData = {
+      eventId: event1.id,
+    };
+
+    // execution
+    const res = await request
+      .delete(endpoint)
+      .set("x-googleid", "hogegoogleid1")
+      .send(sampleData);
+    // assertion
+    res.should.have.status(204);
+    let after = await db.participant.findAll({
+      raw: true,
+      where: { eventId: event1.id },
+    });
+    const actual = after.length;
+    actual.should.be.equal(expect);
+  });
+
   it("GET /hobbies should return a specified hobby", async () => {
     // setup
     const hobby1 = await db.hobby.findOne({

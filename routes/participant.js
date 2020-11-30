@@ -29,4 +29,34 @@ router.post("/", (req, res) => {
     });
 });
 
+/* DELETE */
+router.delete("/", (req, res) => {
+  //  ユーザ取得
+  db.user
+    .findOne({
+      attributes: ["id"],
+      where: {
+        googleId: req.headers["x-googleid"],
+      },
+    })
+    .then((data) => {
+      const userId = data.dataValues.id;
+      const whereObj = {
+        userId: userId,
+        eventId: req.body.eventId,
+      };
+      db.participant
+        .destroy({
+          where: whereObj,
+        })
+        .then(() => {
+          res.status(204).end();
+        });
+    })
+    .catch((e) => {
+      logger4js.debug(e);
+      res.status(500).end();
+    });
+});
+
 module.exports = router;
