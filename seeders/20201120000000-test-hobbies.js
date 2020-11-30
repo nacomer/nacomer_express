@@ -9,6 +9,20 @@ module.exports = {
         createdAt: now,
         updatedAt: now,
       },
+      {
+        name: "LOSTARK",
+        picture:
+          "https://file.gameon.jp/lostark/images/common/header/logo_normal.png",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        name: "ラグナロクオンライン",
+        picture:
+          "https://images-na.ssl-images-amazon.com/images/I/61zXN1%2BnhdL._AC_.jpg",
+        createdAt: now,
+        updatedAt: now,
+      },
     ]);
   },
 
