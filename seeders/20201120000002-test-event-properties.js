@@ -22,6 +22,32 @@ module.exports = {
       where: { subject: "シャドウレイヤーズすこ" },
     });
 
+
+
+    const event3 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "LOST ARKやります、全員集合" },
+    });
+
+    const event4 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "LOST ARKやるお、みんな来てお" },
+    });
+
+    const event5 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "ラグナログオンラインやりますよ！" },
+    });
+
+    const event6 = await db.event.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { subject: "ラグナログオンラインやるお、みんな来てお" },
+    });
+
     const property1 = await db.property.findOne({
       raw: true,
       attributes: ["id"],
@@ -74,6 +100,54 @@ module.exports = {
       },
       {
         eventId: event2.id,
+        propertyId: property3.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event3.id,
+        propertyId: property2.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event3.id,
+        propertyId: property3.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event4.id,
+        propertyId: property2.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event4.id,
+        propertyId: property3.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event5.id,
+        propertyId: property2.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event5.id,
+        propertyId: property3.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event6.id,
+        propertyId: property2.id,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        eventId: event6.id,
         propertyId: property3.id,
         createdAt: now,
         updatedAt: now,

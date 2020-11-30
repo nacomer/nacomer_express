@@ -28,6 +28,18 @@ module.exports = {
       where: { name: "シャドウレイヤーズ" },
     });
 
+    const hobby2 = await db.hobby.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "LOSTARK" },
+    });
+
+    const hobby3 = await db.hobby.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "ラグナロクオンライン" },
+    });
+
     // result1-4の取得が下記処理で間に合わずseedingが安定しないため1秒sleep
     await sleep(1000);
 
@@ -71,7 +83,7 @@ module.exports = {
         minpart: 2,
         place: "ZOOM、詳細はチャットで。",
         description: "初心者歓迎です。",
-        hobbyId: hobby1.id,
+        hobbyId: hobby2.id,
         createdAt: now,
         updatedAt: now,
       },
@@ -85,7 +97,7 @@ module.exports = {
         minpart: 2,
         place: "ZOOM、詳細はチャットで。",
         description: "初心者歓迎ですお。",
-        hobbyId: hobby1.id,
+        hobbyId: hobby2.id,
         createdAt: now,
         updatedAt: now,
       },
@@ -99,7 +111,7 @@ module.exports = {
         minpart: 2,
         place: "ZOOM、詳細はチャットで。",
         description: "初心者歓迎です。",
-        hobbyId: hobby1.id,
+        hobbyId: hobby3.id,
         createdAt: now,
         updatedAt: now,
       },
@@ -113,7 +125,7 @@ module.exports = {
         minpart: 2,
         place: "ZOOM、詳細はチャットで。",
         description: "初心者歓迎ですお。",
-        hobbyId: hobby1.id,
+        hobbyId: hobby3.id,
         createdAt: now,
         updatedAt: now,
       },
