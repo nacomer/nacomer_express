@@ -407,4 +407,19 @@ describe("Nacomer API Server", () => {
     ];
     expected.should.deep.equal(actual);
   });
+
+  it("GET(test) /events should return all event id", async () => {
+    // setup
+    const endpoint = "/v1/events";
+    const events = await db.event.findAll({
+      raw: true,
+      attributes: ["id"],
+    });
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+    // assertion
+    res.should.have.status(200);
+    res.body.should.deep.equal(events);
+  });
 });
