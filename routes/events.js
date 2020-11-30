@@ -80,4 +80,20 @@ router.get("/:eventId", (req, res) => {
     });
 });
 
+router.get("/", (req, res) => {
+  //  イベントidのみ全件取得
+  db.event
+    .findAll({
+      raw: true,
+      attributes: ["id"],
+    })
+    .then((data) => {
+      res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
+    })
+    .catch((e) => {
+      logger4js.debug(e);
+      res.status(500).end();
+    });
+});
+
 module.exports = router;
