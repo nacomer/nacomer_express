@@ -125,7 +125,8 @@ describe("Nacomer API Server", () => {
         comment: "あと一人",
         name: "山田一郎",
         googleId: "hogegoogleid1",
-        picture: "https://hogehoge/1",
+        picture:
+          "https://lh3.googleusercontent.com/a-/AOh14GgvPUM3JKBN6ndyP_Yx7I61v-8ArYIh8_D6QnLL=s96-c",
       },
       {
         comment: "よろ",
@@ -137,7 +138,8 @@ describe("Nacomer API Server", () => {
         comment: "あいうえおコメントあいうえお",
         name: "山田一郎",
         googleId: "hogegoogleid1",
-        picture: "https://hogehoge/1",
+        picture:
+          "https://lh3.googleusercontent.com/a-/AOh14GgvPUM3JKBN6ndyP_Yx7I61v-8ArYIh8_D6QnLL=s96-c",
       },
     ];
 
@@ -201,7 +203,8 @@ describe("Nacomer API Server", () => {
         {
           name: "山田一郎",
           googleId: "hogegoogleid1",
-          picture: "https://hogehoge/1",
+          picture:
+            "https://lh3.googleusercontent.com/a-/AOh14GgvPUM3JKBN6ndyP_Yx7I61v-8ArYIh8_D6QnLL=s96-c",
         },
         {
           name: "山田三郎",
@@ -327,7 +330,8 @@ describe("Nacomer API Server", () => {
       {
         // "id": "f037ae73-8efe-42ba-a2bd-20d425e18952",
         name: "シャドウレイヤーズ",
-        picture: "https://hogehoge/1",
+        picture:
+          "https://images-na.ssl-images-amazon.com/images/I/917h8kCq5sL._AC_SL1500_.jpg",
         events: [
           {
             // "id": "12b0ddd1-e61b-4285-a84f-a6ab7121674d",
