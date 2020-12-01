@@ -57,12 +57,12 @@ module.exports = {
     const event3 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "LOST ARKやります、全員集合" },
+      where: { subject: "LOST ARKやるで" },
     });
     const event4 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "LOST ARKやるお、みんな来てお" },
+      where: { subject: "LOST ARKやるお、来てお" },
     });
     const event5 = await db.event.findOne({
       raw: true,

@@ -7,23 +7,21 @@ const logger4js = require("../config/logger-init");
 router.get("/", (req, res) => {
   db.event
     .findAll({
-      attributes: [
-        "id"
-      ],
-      raw : true
+      attributes: ["id"],
+      raw: true,
     })
     .then((data2) => {
-      let ret = []
-      if(process.env.NODE_ENV == "production"){
-        data2.forEach((record)=>{
-          ret.push("http://www.nacomer.tk/?eventid="+record.id)
-        })
-        res.set({ "Access-Control-Allow-Origin": "*" }).send(ret).end();  
-      }else{
-        data2.forEach((record)=>{
-          ret.push("http://localhost:3000/?eventid="+record.id)
-        })
-        res.set({ "Access-Control-Allow-Origin": "*" }).send(ret).end();  
+      let ret = [];
+      if (process.env.NODE_ENV == "production") {
+        data2.forEach((record) => {
+          ret.push("http://www.nacomer.tk/?eventid=" + record.id);
+        });
+        res.set({ "Access-Control-Allow-Origin": "*" }).send(ret).end();
+      } else {
+        data2.forEach((record) => {
+          ret.push("http://localhost:3000/?eventid=" + record.id);
+        });
+        res.set({ "Access-Control-Allow-Origin": "*" }).send(ret).end();
       }
     })
     .catch((e) => {

@@ -181,7 +181,7 @@ describe("Nacomer API Server", () => {
     const endpoint = "/v1/events/" + event1.id;
     const expected = {
       subject: "シャドウレイダーズやります",
-      maxpart: 10,
+      maxpart: 100,
       minpart: 5,
       place: "新宿ピカデリー",
       description: "初心者歓迎です。",
@@ -360,7 +360,7 @@ describe("Nacomer API Server", () => {
             // "deadline": "2020-12-10T14:00:00.000Z",
             // "start": "2020-12-17T10:00:00.000Z",
             // "end": "2020-12-17T13:00:00.000Z",
-            maxpart: 10,
+            maxpart: 100,
             minpart: 5,
             place: "新宿ピカデリー",
             description: "初心者歓迎です。",
@@ -373,7 +373,7 @@ describe("Nacomer API Server", () => {
             // "deadline": "2020-12-05T14:00:00.000Z",
             // "start": "2020-12-20T10:00:00.000Z",
             // "end": "2020-12-20T13:00:00.000Z",
-            maxpart: 10,
+            maxpart: 100,
             minpart: 5,
             place: "新宿ピカデリー",
             description: "初心者の方も。",
@@ -438,7 +438,7 @@ describe("Nacomer API Server", () => {
     const expected = [
       {
         subject: "シャドウレイダーズやります",
-        maxpart: 10,
+        maxpart: 100,
         minpart: 5,
         place: "新宿ピカデリー",
         description: "初心者歓迎です。",
@@ -466,7 +466,7 @@ describe("Nacomer API Server", () => {
       },
       {
         subject: "シャドウレイダーズすこ",
-        maxpart: 10,
+        maxpart: 100,
         minpart: 5,
         place: "新宿ピカデリー",
         description: "初心者の方も。",
