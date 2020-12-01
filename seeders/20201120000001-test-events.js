@@ -22,6 +22,16 @@ module.exports = {
       where: { name: "山田二郎" },
     });
 
+    const user3 = await db.user.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "山田太郎" },
+    });
+    const user4 = await db.user.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "佐藤太郎" },
+    });
     const hobby1 = await db.hobby.findOne({
       raw: true,
       attributes: ["id"],
@@ -75,7 +85,7 @@ module.exports = {
       },
       {
         subject: "LOST ARKやります、全員集合",
-        ownerId: user1.id,
+        ownerId: user3.id,
         deadline: new Date("2020-12-10T23:00:00"),
         start: new Date("2020-12-17T19:00:00"),
         end: new Date("2020-12-17T22:00:00"),
@@ -89,7 +99,7 @@ module.exports = {
       },
       {
         subject: "LOST ARKやるお、みんな来てお",
-        ownerId: user1.id,
+        ownerId: user3.id,
         deadline: new Date("2020-12-10T23:00:00"),
         start: new Date("2020-12-17T19:00:00"),
         end: new Date("2020-12-17T22:00:00"),
@@ -103,7 +113,7 @@ module.exports = {
       },
       {
         subject: "ラグナログオンラインやりますよ！",
-        ownerId: user1.id,
+        ownerId: user4.id,
         deadline: new Date("2020-12-10T23:00:00"),
         start: new Date("2020-12-17T19:00:00"),
         end: new Date("2020-12-17T22:00:00"),
@@ -117,7 +127,7 @@ module.exports = {
       },
       {
         subject: "ラグナログオンラインやるお、みんな来てお",
-        ownerId: user1.id,
+        ownerId: user4.id,
         deadline: new Date("2020-12-10T23:00:00"),
         start: new Date("2020-12-17T19:00:00"),
         end: new Date("2020-12-17T22:00:00"),
