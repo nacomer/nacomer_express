@@ -426,4 +426,129 @@ describe("Nacomer API Server", () => {
     res.should.have.status(200);
     res.body.should.deep.equal(events);
   });
+
+  it("GET /events?userId=xxx should return events", async () => {
+    // setup
+    const user1 = await db.user.findOne({
+      raw: true,
+      attributes: ["id"],
+      where: { name: "山田三郎" },
+    });
+    const endpoint = "/v1/events/?userId=" + user1.id;
+    const expected = [
+      {
+        subject: "シャドウレイヤーズやります",
+        maxpart: 10,
+        minpart: 5,
+        place: "新宿ピカデリー",
+        description: "初心者歓迎です。",
+        properties: [
+          {
+            name: "急募",
+            category: "alarm",
+          },
+          {
+            name: "オープン",
+            category: "information",
+          },
+          {
+            name: "初心者歓迎",
+            category: "information",
+          },
+        ],
+        users: [
+          {
+            name: "山田三郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+        ],
+      },
+      {
+        subject: "シャドウレイヤーズすこ",
+        maxpart: 10,
+        minpart: 5,
+        place: "新宿ピカデリー",
+        description: "初心者の方も。",
+        properties: [
+          {
+            name: "ゆる募",
+            category: "information",
+          },
+          {
+            name: "オープン",
+            category: "information",
+          },
+        ],
+        users: [
+          {
+            name: "山田三郎",
+            googleId: "hogegoogleid3",
+            picture: "https://hogehoge/3",
+          },
+        ],
+      },
+    ];
+
+    // execution
+    const res = await request.get(endpoint).set("x-googleid", "hogegoogleid1");
+
+    // assertion
+    const actual = [
+      {
+        subject: res.body[0].subject,
+        maxpart: res.body[0].maxpart,
+        minpart: res.body[0].minpart,
+        place: res.body[0].place,
+        description: res.body[0].description,
+        properties: [
+          {
+            name: res.body[0].properties[0].name,
+            category: res.body[0].properties[0].category,
+          },
+          {
+            name: res.body[0].properties[1].name,
+            category: res.body[0].properties[1].category,
+          },
+          {
+            name: res.body[0].properties[2].name,
+            category: res.body[0].properties[2].category,
+          },
+        ],
+        users: [
+          {
+            name: res.body[0].users[0].name,
+            googleId: res.body[0].users[0].googleId,
+            picture: res.body[0].users[0].picture,
+          },
+        ],
+      },
+      {
+        subject: res.body[1].subject,
+        maxpart: res.body[1].maxpart,
+        minpart: res.body[1].minpart,
+        place: res.body[1].place,
+        description: res.body[1].description,
+        properties: [
+          {
+            name: res.body[1].properties[0].name,
+            category: res.body[1].properties[0].category,
+          },
+          {
+            name: res.body[1].properties[1].name,
+            category: res.body[1].properties[1].category,
+          },
+        ],
+        users: [
+          {
+            name: res.body[1].users[0].name,
+            googleId: res.body[1].users[0].googleId,
+            picture: res.body[1].users[0].picture,
+          },
+        ],
+      },
+    ];
+
+    expected.should.deep.equal(actual);
+  });
 });
