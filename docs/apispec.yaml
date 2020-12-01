@@ -9,24 +9,24 @@ paths:
       summary: Get all event chat records.
       description: 特定イベントの全チャットレコードを返却します。
       parameters:
-      - name: "x-googleid"
-        in: "header"
-        description: "infomation of logged in user googleID"
-        schema:
-          type: "string"
-      - name: "eventId"
-        in: "query"
-        description: "target event ID"
-        schema:
-          type: "string"
+        - name: "x-googleid"
+          in: "header"
+          description: "infomation of logged in user googleID"
+          schema:
+            type: "string"
+        - name: "eventId"
+          in: "query"
+          description: "target event ID"
+          schema:
+            type: "string"
       responses:
-        '200':
+        "200":
           description: HTTPステータスコード200と以下の情報を含むJSONオブジェクトを返します。
           content:
             application/json:
               schema:
                 type: array
-                items: 
+                items:
                   type: "object"
                   properties:
                     id:
@@ -46,7 +46,7 @@ paths:
                       example: "2020-11-20T07:06:09.247Z"
                     user:
                       type: "object"
-                      properties: 
+                      properties:
                         id:
                           type: string
                           example: "4a1f6310-1b15-4c10-8fd4-fd2140e8d03b"
@@ -64,15 +64,15 @@ paths:
       summary: Post a comment to specific event chat.
       description: チャットテーブルにイベントIDとユーザID、コメント内容を含むレコードを追加します.
       parameters:
-      - name: "x-googleid"
-        in: "header"
-        description: "infomation of logged in user googleID"
-        schema:
-          type: "string"
+        - name: "x-googleid"
+          in: "header"
+          description: "infomation of logged in user googleID"
+          schema:
+            type: "string"
       requestBody:
         content:
           application/json:
-            schema: 
+            schema:
               type: "object"
               properties:
                 eventId:
@@ -82,16 +82,16 @@ paths:
                   type: string
                   example: よろしくお願いします！
       responses:
-        '201':
+        "201":
           description: chatcommentテーブルにレコードを挿入しHTTPステータスコード201が返却されます。
-        '500':
+        "500":
           description: 挿入データが不正の場合、HTTPステータスコード500が返却されます。
 
   /v1/events/{eventId}:
     get:
       summary: show event details.
       description: |
-                paramsで指定されたIDのイベントの詳細を返します。
+        paramsで指定されたIDのイベントの詳細を返します。
       parameters:
         - in: "header"
           name: "x-googleid"
@@ -105,7 +105,7 @@ paths:
           schema:
             type: "string"
       responses:
-        '200':
+        "200":
           description: HTTPステータスコード200と以下の情報を含むJSONオブジェクトを返します。
           content:
             application/json:
@@ -117,7 +117,7 @@ paths:
                     example: a5456c30-439f-4ab9-8380-ce49997f4f79
                   subject:
                     type: string
-                    example: シャドウレイヤーズやります
+                    example: シャドウレイダーズやります
                   ownerId:
                     type: string
                     example: 6952a2a8-6147-4fdf-a564-be073533dccd
@@ -130,10 +130,10 @@ paths:
                   end:
                     type: string
                     example: "2020-12-17T13:00:00.000Z"
-                  maxpart: 
+                  maxpart:
                     type: number
                     example: 10
-                  minpart: 
+                  minpart:
                     type: number
                     example: 5
                   place:
@@ -147,7 +147,7 @@ paths:
                     example: 5efb5e1b-e34e-424a-a226-e47fd85b2cfc
                   properties:
                     type: array
-                    items: 
+                    items:
                       properties:
                         id:
                           type: string
@@ -155,12 +155,12 @@ paths:
                         name:
                           type: string
                           example: 急募
-                        category: 
+                        category:
                           type: string
                           example: alarm
                   users:
                     type: array
-                    items: 
+                    items:
                       properties:
                         id:
                           type: string
@@ -173,13 +173,13 @@ paths:
                           example: hogegoogleid1
                         picture:
                           type: string
-                          example: 'https://hogehoge/1'
+                          example: "https://hogehoge/1"
 
   /v1/hobbies/{hobbyId}:
     get:
       summary: show events related specific hobby ID.
       description: |
-                paramsで指定されたhobbyIDに関連するイベントを返します。
+        paramsで指定されたhobbyIDに関連するイベントを返します。
       parameters:
         - in: "header"
           name: "x-googleid"
@@ -193,7 +193,7 @@ paths:
           schema:
             type: "string"
       responses:
-        '200':
+        "200":
           description: HTTPステータスコード200と以下の情報を含むJSONオブジェクトを返します。
           content:
             application/json:
@@ -205,20 +205,20 @@ paths:
                     example: a5456c30-439f-4ab9-8380-ce49997f4f79
                   name:
                     type: string
-                    example: シャドウレイヤーズ
+                    example: シャドウレイダーズ
                   picture:
                     type: string
                     example: https://hogehoge/1
                   events:
                     type: array
-                    items: 
+                    items:
                       properties:
                         id:
                           type: string
                           example: a5456c30-439f-4ab9-8380-ce49997f4f79
                         subject:
                           type: string
-                          example: シャドウレイヤーズやります
+                          example: シャドウレイダーズやります
                         ownerId:
                           type: string
                           example: 6952a2a8-6147-4fdf-a564-be073533dccd
@@ -231,10 +231,10 @@ paths:
                         end:
                           type: string
                           example: "2020-12-17T13:00:00.000Z"
-                        maxpart: 
+                        maxpart:
                           type: number
                           example: 10
-                        minpart: 
+                        minpart:
                           type: number
                           example: 5
                         place:
@@ -250,11 +250,11 @@ paths:
   /v1/login:
     post:
       summary: |
-              Check whether the user with specified google ID does exist in "users" table. 
-              if not, add the user into "users" table.
+        Check whether the user with specified google ID does exist in "users" table. 
+        if not, add the user into "users" table.
       description: |
-                指定したGoogleIDのユーザが"users"tableに存在するかどうかを確認します。 
-                いない場合はユーザを"users"tableに追加します。
+        指定したGoogleIDのユーザが"users"tableに存在するかどうかを確認します。 
+        いない場合はユーザを"users"tableに追加します。
       parameters:
         - in: "header"
           name: "x-googleid"
@@ -264,7 +264,7 @@ paths:
       requestBody:
         content:
           application/json:
-            schema: 
+            schema:
               type: "object"
               properties:
                 userName:
@@ -274,9 +274,9 @@ paths:
                   type: string
                   example: https://xxx.googleusercontent.com/-xxxx/xxx/xxx/xxx/xxx/photo.jpg
       responses:
-        '200':
+        "200":
           description: 既にユーザが存在した場合はHTTPステータスコード200を返します。
-        '201':
+        "201":
           description: 新規でユーザを作成した場合はHTTPステータスコード201を返します。
 
   /v1/partcipant:
@@ -284,44 +284,44 @@ paths:
       summary: apply event
       description: 特定イベント参加のため、participantsテーブルにレコードを追加します。
       parameters:
-      - name: "x-googleid"
-        in: "header"
-        description: "infomation of target user googleID"
-        schema:
-          type: "string"
+        - name: "x-googleid"
+          in: "header"
+          description: "infomation of target user googleID"
+          schema:
+            type: "string"
       requestBody:
         content:
           application/json:
-            schema: 
+            schema:
               type: "object"
               properties:
                 eventId:
                   type: string
                   example: "d49d7e74-3fdf-4089-a6ff-aeae66cbd644"
       responses:
-        '201':
+        "201":
           description: 新規でレコードを作成し、HTTPステータスコード201を返します。
-        '409':
+        "409":
           description: 既に参加済の場合、レコードは作成せずHTTPステータスコード201を返します。
 
     delete:
       summary: cansel event
       description: 特定イベント参加取消のため、participantsテーブルからレコードを削除します。
       parameters:
-      - name: "x-googleid"
-        in: "header"
-        description: "infomation of target user googleID"
-        schema:
-          type: "string"
+        - name: "x-googleid"
+          in: "header"
+          description: "infomation of target user googleID"
+          schema:
+            type: "string"
       requestBody:
         content:
           application/json:
-            schema: 
+            schema:
               type: "object"
               properties:
                 eventId:
                   type: string
                   example: "d49d7e74-3fdf-4089-a6ff-aeae66cbd644"
       responses:
-        '204':
+        "204":
           description: レコードを削除し、HTTPステータスコード204を返します。

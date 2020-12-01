@@ -55,12 +55,12 @@ module.exports = {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズやります" },
+      where: { subject: "シャドウレイダーズやります" },
     });
     const event2 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズすこ" },
+      where: { subject: "シャドウレイダーズすこ" },
     });
 
     // result1-4の取得が下記処理で間に合わずseedingが安定しないため1秒sleep
