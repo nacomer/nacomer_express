@@ -97,7 +97,7 @@ describe("Nacomer API Server", () => {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズやります" },
+      where: { subject: "シャドウレイダーズやります" },
     });
     const sampleData = {
       eventId: event1.id,
@@ -176,11 +176,11 @@ describe("Nacomer API Server", () => {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズやります" },
+      where: { subject: "シャドウレイダーズやります" },
     });
     const endpoint = "/v1/events/" + event1.id;
     const expected = {
-      subject: "シャドウレイヤーズやります",
+      subject: "シャドウレイダーズやります",
       maxpart: 10,
       minpart: 5,
       place: "新宿ピカデリー",
@@ -270,7 +270,7 @@ describe("Nacomer API Server", () => {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズすこ" },
+      where: { subject: "シャドウレイダーズすこ" },
     });
     const sampleData = {
       eventId: event1.id,
@@ -290,7 +290,7 @@ describe("Nacomer API Server", () => {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズすこ" },
+      where: { subject: "シャドウレイダーズすこ" },
     });
     const sampleData = {
       eventId: event1.id,
@@ -310,7 +310,7 @@ describe("Nacomer API Server", () => {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズすこ" },
+      where: { subject: "シャドウレイダーズすこ" },
     });
     let before = await db.participant.findAll({
       raw: true,
@@ -343,19 +343,19 @@ describe("Nacomer API Server", () => {
     const hobby1 = await db.hobby.findOne({
       raw: true,
       attributes: ["id"],
-      where: { name: "シャドウレイヤーズ" },
+      where: { name: "シャドウレイダーズ" },
     });
     const endpoint = "/v1/hobbies/" + hobby1.id;
     const expected = [
       {
         // "id": "f037ae73-8efe-42ba-a2bd-20d425e18952",
-        name: "シャドウレイヤーズ",
+        name: "シャドウレイダーズ",
         picture:
           "https://images-na.ssl-images-amazon.com/images/I/917h8kCq5sL._AC_SL1500_.jpg",
         events: [
           {
             // "id": "12b0ddd1-e61b-4285-a84f-a6ab7121674d",
-            subject: "シャドウレイヤーズやります",
+            subject: "シャドウレイダーズやります",
             // "ownerId": "899d7173-e439-4028-a4bc-274c16d04458",
             // "deadline": "2020-12-10T14:00:00.000Z",
             // "start": "2020-12-17T10:00:00.000Z",
@@ -368,7 +368,7 @@ describe("Nacomer API Server", () => {
           },
           {
             // "id": "d07e4158-19c2-4012-a5ce-2f10be1035dc",
-            subject: "シャドウレイヤーズすこ",
+            subject: "シャドウレイダーズすこ",
             // "ownerId": "a7a966df-ccdd-444a-878c-ad7bd88c22c6",
             // "deadline": "2020-12-05T14:00:00.000Z",
             // "start": "2020-12-20T10:00:00.000Z",
@@ -437,7 +437,7 @@ describe("Nacomer API Server", () => {
     const endpoint = "/v1/events/?userId=" + user1.id;
     const expected = [
       {
-        subject: "シャドウレイヤーズやります",
+        subject: "シャドウレイダーズやります",
         maxpart: 10,
         minpart: 5,
         place: "新宿ピカデリー",
@@ -465,7 +465,7 @@ describe("Nacomer API Server", () => {
         ],
       },
       {
-        subject: "シャドウレイヤーズすこ",
+        subject: "シャドウレイダーズすこ",
         maxpart: 10,
         minpart: 5,
         place: "新宿ピカデリー",

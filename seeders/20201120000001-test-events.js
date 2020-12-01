@@ -35,7 +35,7 @@ module.exports = {
     const hobby1 = await db.hobby.findOne({
       raw: true,
       attributes: ["id"],
-      where: { name: "シャドウレイヤーズ" },
+      where: { name: "シャドウレイダーズ" },
     });
 
     const hobby2 = await db.hobby.findOne({
@@ -56,7 +56,7 @@ module.exports = {
     const now = new Date();
     return queryInterface.bulkInsert("events", [
       {
-        subject: "シャドウレイヤーズやります",
+        subject: "シャドウレイダーズやります",
         ownerId: user1.id,
         deadline: new Date("2020-12-10T23:00:00"),
         start: new Date("2020-12-17T19:00:00"),
@@ -70,7 +70,7 @@ module.exports = {
         updatedAt: now,
       },
       {
-        subject: "シャドウレイヤーズすこ",
+        subject: "シャドウレイダーズすこ",
         ownerId: user2.id,
         deadline: new Date("2020-12-05T23:00:00"),
         start: new Date("2020-12-20T19:00:00"),

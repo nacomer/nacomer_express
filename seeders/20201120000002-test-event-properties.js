@@ -14,15 +14,13 @@ module.exports = {
     const event1 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズやります" },
+      where: { subject: "シャドウレイダーズやります" },
     });
     const event2 = await db.event.findOne({
       raw: true,
       attributes: ["id"],
-      where: { subject: "シャドウレイヤーズすこ" },
+      where: { subject: "シャドウレイダーズすこ" },
     });
-
-
 
     const event3 = await db.event.findOne({
       raw: true,
