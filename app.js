@@ -12,6 +12,7 @@ const chatCommentsRouter = require("./routes/chatComments");
 const eventsRouter = require("./routes/events");
 const participantRouter = require("./routes/participant");
 const hobbyRouter = require("./routes/hobbies");
+const endpointRouter = require("./routes/endpoint");
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use(cors());
 app.get("/health", (req, res) => {
   res.status(200).end();
 });
+
+app.use("/v1/endpoint", endpointRouter);
 
 // Authentication before api execution using Google OAuth2 API
 app.use(async (req, res, next) => {
