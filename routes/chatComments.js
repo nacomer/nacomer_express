@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   db.chatComment
     .findAll({
       where: { eventId: req.query.eventId },
-      order: ["createdAt", "ASC"],
+      order: [["createdAt", "ASC"]],
       attributes: ["id", "participantId", "eventId", "comment", "date"],
       include: [
         {
