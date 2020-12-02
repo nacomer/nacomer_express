@@ -351,7 +351,7 @@ describe("Nacomer API Server", () => {
         // "id": "f037ae73-8efe-42ba-a2bd-20d425e18952",
         name: "シャドウレイダーズ",
         picture:
-          "https://images-na.ssl-images-amazon.com/images/I/917h8kCq5sL._AC_SL1500_.jpg",
+          "https://boku-boardgame.net/wp-content/uploads/2019/06/shadow-raiders-expnsion-top-1.jpg",
         events: [
           {
             // "id": "12b0ddd1-e61b-4285-a84f-a6ab7121674d",
