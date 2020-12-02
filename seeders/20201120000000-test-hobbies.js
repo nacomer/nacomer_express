@@ -5,7 +5,7 @@ module.exports = {
       {
         name: "シャドウレイダーズ",
         picture:
-          "https://images-na.ssl-images-amazon.com/images/I/917h8kCq5sL._AC_SL1500_.jpg",
+          "https://boku-boardgame.net/wp-content/uploads/2019/06/shadow-raiders-expnsion-top-1.jpg",
         createdAt: now,
         updatedAt: now,
       },
